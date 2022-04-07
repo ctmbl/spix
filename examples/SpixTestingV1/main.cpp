@@ -7,6 +7,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <Spix/QtQmlBot.h>
+#include <Spix/AnyRpcServer.h>
 
 #include <iostream>
 
@@ -43,10 +44,34 @@ int main(int argc, char* argv[])
 
     // Instantiate and run tests
     MyTests tests;
+    spix::AnyRpcServer server;
     auto bot = new spix::QtQmlBot();
-    bot->runTestServer(tests);
+    
 
-    printf("This is the most basic Spix example\n");
+    printf("This is my Spix Proj to test the possibilities of Spix and its limits\n");
+
+    if(argc == 1)
+        printf("[+] No options has been given, run app only, no bot");
+    else if(argc > 2)
+        printf("[+] Only one arg INTEGER is taken into account");        
+    else {
+        switch (std::stoi(argv[1]))
+        {
+        case 1:
+            printf("[+] Run the app with integrated tests\n");
+            bot->runTestServer(tests);
+            break;
+        
+        case 2:
+            printf("[+] Run the app with remote control\n");
+            bot->runTestServer(server);
+            break;
+        default:
+            printf("[+] Unknown mode number\n");
+            break;
+        }
+    } 
+    
 
     return app.exec();
 }
