@@ -2,5 +2,44 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>ResultsView.qml</file>
+		<file>qml/ProjectListEntry.qml</file>
+		<file>qml/ProjectListToolBar.qml</file>
+		<file>qml/ProjectListView.qml</file>
+		<file>qml/ProjectListViewRow.qml</file>
+		<file>qml/ProjectListWindow.qml</file>
+		<file>qml/WBButton.qml</file>
+		<file>qml/WBButton01.qml</file>
+		<file>qml/WBButton02.qml</file>
+		<file>qml/WBButton03.qml</file>
+		<file>qml/WBButton04.qml</file>
+		<file>qml/WBButtonGroup.qml</file>
+		<file>qml/WBButtonWithModifiers.qml</file>
+		<file>qml/WBToolBar.qml</file>
+		<file>qml/WBToolBarButton.qml</file>
+		<file>qml/WBToolBarMenu.qml</file>
+		<file>qml/WBToolBarMenuContent.qml</file>
+		<file>qml/WBToolBarSeparator.qml</file>
+		<file>qml/WBMenuBar.qml</file>
+		<file>qml/WBMenuItem.qml</file>
+		<file>qml/WBMenu.qml</file>
+		<file>qml/WBMenuSeparator.qml</file>
+		<file>qml/WBConstants.qml</file>
+		<file>qml/WBApplicationWindow.qml</file>
+		<file>theme/CustomTheme.qml</file>
+        <file>theme/DarkTheme.qml</file>
+        <file>theme/LightTheme.qml</file>
+        <file>theme/OceanTheme.qml</file>
+        <file>theme/ThemeManager.qml</file>
+		<file>fonts/B612 Mono-Bold.ttf</file>
+		<file>fonts/B612 Mono-BoldItalic.ttf</file>
+		<file>fonts/B612 Mono-Italic.ttf</file>
+		<file>fonts/B612 Mono-Regular.ttf</file>
+		<file>fonts/B612-Bold.ttf</file>
+		<file>fonts/B612-BoldItalic.ttf</file>
+		<file>fonts/B612-Italic.ttf</file>
+		<file>fonts/B612-Regular.ttf</file>
     </qresource>
 </RCC>
+
+
+

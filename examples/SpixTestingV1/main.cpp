@@ -51,9 +51,9 @@ int main(int argc, char* argv[])
     printf("This is my Spix Proj to test the possibilities of Spix and its limits\n");
 
     if(argc == 1)
-        printf("[+] No options has been given, run app only, no bot");
+        printf("[+] No options has been given, run app only, no bot\n");
     else if(argc > 2)
-        printf("[+] Only one arg INTEGER is taken into account");        
+        printf("[+] Only one arg INTEGER is taken into account\n");        
     else {
         switch (std::stoi(argv[1]))
         {
