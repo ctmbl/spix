@@ -81,7 +81,7 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
     utils::AddFunctionToAnyRpc<bool(std::string)>(methodManager, "existsAndVisible",
         "Returns true if the given object exists | existsAndVisible(string path) : bool exists_and_visible",
         [this](std::string path) { return existsAndVisible(std::move(path)); });
-
+        
     utils::AddFunctionToAnyRpc<std::vector<std::string>()>(methodManager, "getErrors",
         "Returns internal errors that occurred during test execution | getErrors() : (strings) [error1, ...]",
         [this]() { return getErrors(); });
@@ -98,6 +98,8 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
     utils::AddFunctionToAnyRpc<void(std::string, std::string)>(methodManager, "command",
         "Executes a generic command | command(string command, string payload)",
         [this](std::string command, std::string payload) { genericCommand(command, payload); });
+
+    utils::AddFunctionToAnyRpc<void()>(methodManager, "dummy", "Dummy function to test implementations in Spix", [this] { printf("[*] Dummy function activated\n"); });
 
     m_pimpl->server->BindAndListen(anyrpcPort);
 }
