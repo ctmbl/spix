@@ -1,0 +1,10 @@
+#!/usr/bin/python3.9 -i
+
+import xmlrpc.client
+
+s = xmlrpc.client.ServerProxy('http://localhost:9000')
+print("[+] Available Methods:")
+for method in s.system.listMethods():
+    print("\t",method)
+
+print("example:   >>> s.mouseClick('mainWindow/Button_00')") 
