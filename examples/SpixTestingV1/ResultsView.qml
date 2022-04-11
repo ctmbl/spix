@@ -8,6 +8,9 @@ Rectangle {
     function appendText(text) {
         resultsArea.append(text);
     }
+    function clearText(text) {
+        resultsArea.clear();
+    }
 
     Text {
         id: resultsTitle

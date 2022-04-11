@@ -395,6 +395,7 @@ QmlWidgets.WBApplicationWindow {
     }
 
     RowLayout {
+        objectName: "rowLayout"
 
         anchors {
             top: parent.top
@@ -404,7 +405,7 @@ QmlWidgets.WBApplicationWindow {
         }
 
         QmlWidgets.WBButton {
-            objectName: "Button_00"
+            objectName: "button00"
             text: "Press Me"
 			MouseArea {
 				anchors.fill: parent
@@ -420,7 +421,7 @@ QmlWidgets.WBApplicationWindow {
 			}
         }
         QmlWidgets.WBButton01 {
-            objectName: "Button_01"
+            objectName: "button01"
             text: "Or Click Me"
 			MouseArea {
 				anchors.fill: parent
@@ -436,7 +437,8 @@ QmlWidgets.WBApplicationWindow {
 			}
         }
         QmlWidgets.WBButton02 {
-            id: button_02
+            objectName: "button_02"
+            id: button02
             text: "Button Style 02"
             MouseArea {
 				anchors.fill: parent
@@ -444,6 +446,7 @@ QmlWidgets.WBApplicationWindow {
 				
 				onClicked:
 				{
+                    resultsView.appendText("Button 02 has an ID AND an objectName (button_02)")
 					if(mouse.button & Qt.RightButton)
 						resultsView.appendText("Button 2 right clicked")
 					else
@@ -453,7 +456,7 @@ QmlWidgets.WBApplicationWindow {
 
         }
         QmlWidgets.WBButton03 {
-            id: button_03
+            id: button03
             text: "Button Style 03"
 			MouseArea {
 				anchors.fill: parent
@@ -461,6 +464,7 @@ QmlWidgets.WBApplicationWindow {
 				
 				onClicked:
 				{
+                    resultsView.appendText("[+] searched by ID")
 					if(mouse.button & Qt.RightButton)
 						resultsView.appendText("Button 3 right clicked")
 					else
@@ -469,9 +473,36 @@ QmlWidgets.WBApplicationWindow {
 			}
         }
         QmlWidgets.WBButton04 {
-            id: button_04
+            id: button04
             text: "Button Style 04"
-
+			MouseArea {
+				anchors.fill: parent
+				acceptedButtons:  Qt.AllButtons
+				
+				onClicked:
+				{
+                    resultsView.appendText("[+] searched by ID")
+					if(mouse.button & Qt.RightButton)
+						resultsView.appendText("Button 4 right clicked")
+                    if(mouse.button & Qt.MiddleButton)
+                        resultsView.appendText("Button 4 middle clicked")
+					if(mouse.button & Qt.LeftButton)
+						resultsView.appendText("Button 4 left clicked")
+				}
+			}
+        }
+        QmlWidgets.WBButton04 {
+            id: clearButton
+            text: "Clear Text"
+			MouseArea {
+				anchors.fill: parent
+				acceptedButtons:  Qt.LeftButton
+				
+				onClicked:
+				{
+                    resultsView.clearText()
+                }
+			}
         }
     }
 

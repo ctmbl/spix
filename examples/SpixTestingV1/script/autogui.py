@@ -27,12 +27,12 @@ print("Make sure the qt app is in the foreground... waiting 3s...")
 time.sleep(3)
 
 # Click buttons
-print("[-] WARNING won't work on SpixTestingV1 names have changed")
-clickItem("mainWindow/Button_1")
-clickItem("mainWindow/Button_2")
-clickItem("mainWindow/Button_2")
-clickItem("mainWindow/Button_1")
-clickItem("mainWindow/Button_2")
+
+clickItem("mainWindow/button01")
+clickItem("mainWindow/button00")
+clickItem("mainWindow/button03")
+clickItem("mainWindow/button04")
+clickItem("mainWindow/button_02")
 
 # Query the qt app for the text contents of the results box
 resultText = s.getStringProperty("mainWindow/results", "text")
