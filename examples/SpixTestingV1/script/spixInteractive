@@ -2,9 +2,38 @@
 
 import xmlrpc.client
 
-s = xmlrpc.client.ServerProxy('http://localhost:9000')
-print("[+] Available Methods:")
-for method in s.system.listMethods():
-    print("\t",method)
+def sHelp():
+    print("[+] Available Methods:")
+    for method in s.system.listMethods():
+        print("\t",method)
+    print("example:   >>> s.mouseClick('mainWindow/button00')") 
+    spix(None)
+    return
 
-print("example:   >>> s.mouseClick('mainWindow/Button_00')") 
+def spixHelp():
+    sHelp()
+
+def help():
+    sHelp()
+
+def spix(cmd):
+    if cmd == None:
+        print("help   :   >>> help()|sHelp()|spixHelp()    // to print help") 
+        print("help   :   >>> spix('<command>|all')        // to display <command> help and examples") 
+        return
+    if cmd == "all":
+        print("help:  List of methods and their signatures")
+        for method in s.system.listMethods():
+            print("\t- ",f"{method:20s}", " : ", end="")
+            spix(method)
+        return
+    try:
+        print(s.system.methodHelp(cmd))
+    except xmlrpc.client.Fault:
+        print("[-] Unknown method name from anyRPC")
+
+
+s = xmlrpc.client.ServerProxy('http://localhost:9000')
+sHelp()
+
+
