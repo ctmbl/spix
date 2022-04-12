@@ -13,29 +13,38 @@ QmlWidgets.WBApplicationWindow {
     title: qsTr("Spix Example")
     color: "#111111"
 
-    /*menuBar:*/ QmlWidgets.WBMenuBar {
+    //Added to overwrite WBApplicationWindow values in order to test:
+    minimumWidth: 0
+    minimumHeight: 0
+
+    menuBar: QmlWidgets.WBMenuBar {
         objectName: "menuBar"
+        id: menuBar
 
-        property string executionStatus:
-            simulationDataController.hasMonitoring ?
-                (simulationDataController.lastExecutionStatus === MonitoredSimulationStatus.SimulationRunning ?
-                     " (Running " + simulationDataController.lastExecutionCompletionPercentage + "%...)" :
-                     simulationDataController.lastExecutionStatus === MonitoredSimulationStatus.SimulationTerminatedSuccess ?
-                         " (Execution success)" :
-                        simulationDataController.lastExecutionStatus === MonitoredSimulationStatus.SimulationTerminatedInterrupted ?
-                            " (Interrupted)" :
-                            simulationDataController.lastExecutionStatus === MonitoredSimulationStatus.SimulationTerminatedFailure ?
-                                " (Execution failure)" : "") : ""
+        //title: "studioMenuBarSimplified"
+       
+        
+        Menu {
+            objectName: "test"
+            id: test
+            title: qsTr("Test")
+            QmlWidgets.WBMenuItem{
+                text: qsTr("Option1")
+                objectName: "option1"
+                onTriggered: resultsView.appendText("Option 1 in Test Menu triggered")
 
-        title:
-            simulationDataController.simulationState === Simulation.Opened ?
-                (simulationDataController.isDataModified ? "*" : "") +
-                currentSimulationModel.simulationName + " - " +
-                currentSimulationModel.solverVariantPreset +
-                executionStatus : ""
+            }
+            MenuItem{
+                text: qsTr("Option2")
+                objectName: "option2"
+                onTriggered: resultsView.appendText("Option 2 in Test Menu triggered")
+
+            }
+        }
 
         QmlWidgets.WBMenu {
-            objectName: "File"
+            objectName: "file"
+            id: file
             title: qsTr("File")
             QmlWidgets.WBMenuItem { 
                 text: qsTr("New...")
@@ -152,11 +161,17 @@ QmlWidgets.WBApplicationWindow {
                 text: qsTr("Exit Simcenter SPH Flow Studio")
                 onTriggered: onQuitApplicationEvent()
             }
+            QmlWidgets.WBMenuSeparator { }
+            QmlWidgets.WBMenuItem {
+                objectName: "Size"
+                text: qsTr("Print 'File' size")
+                onTriggered: resultsView.appendText("x: " + file.x + "  y: " + file.y + "  width: " + file.width + "height: " + file.height + "  count: " + file.count)
+            }
         }
 
         QmlWidgets.WBMenu {
             title: qsTr("Edit")
-            objectName: "Edit"
+            id: edit
 
             QmlWidgets.WBMenuItem {
                 text: qsTr("Undo ")  + undoRedoManager.undoText + " (CTRL+Z)"
@@ -203,6 +218,7 @@ QmlWidgets.WBApplicationWindow {
             }
             QmlWidgets.WBMenuItem{
                 text: qsTr("Enabling the disabled button")
+                objectName: "enablingButton"
                 onTriggered: {
                     disabledSpixTestingButton.enabled = true
                     disablerOfDisabledButton.visible = true
@@ -212,7 +228,7 @@ QmlWidgets.WBApplicationWindow {
             QmlWidgets.WBMenuItem {
                 id: disabledSpixTestingButton
                 text: qsTr("Disabled Button for Spix Testing")
-                objectName: "Disabled_Button"
+                objectName: "disabledButton"
                 enabled: false
                 onTriggered: {
                     console.log("the Disabled Button is : " + disabledSpixTestingButton.enabled)
@@ -233,6 +249,7 @@ QmlWidgets.WBApplicationWindow {
         }
 
         QmlWidgets.WBMenu {
+            id: tools
             title: qsTr("Tools")
 
             QmlWidgets.WBMenu {
@@ -376,6 +393,7 @@ QmlWidgets.WBApplicationWindow {
 
         QmlWidgets.WBMenu {
             title: qsTr("Help")
+            id: help
 
             QmlWidgets.WBMenuItem {
                 text: qsTr("Documentations...")
@@ -395,7 +413,7 @@ QmlWidgets.WBApplicationWindow {
     }
 
     RowLayout {
-        objectName: "rowLayout"
+        id: rowLayout1
 
         anchors {
             top: parent.top
@@ -406,13 +424,14 @@ QmlWidgets.WBApplicationWindow {
 
         QmlWidgets.WBButton {
             objectName: "button00"
-            text: "Press Me"
+            text: "'File' infos"
 			MouseArea {
 				anchors.fill: parent
 				acceptedButtons:  Qt.AllButtons
 				
 				onClicked:
 				{
+                    resultsView.appendText("x: " + file.x + "  y: " + file.y + "  width: " + file.width + "  height: " + file.height + "  count: " + file.count)
 					if(mouse.button & Qt.RightButton)
 						resultsView.appendText("Button 0 right clicked")
 					else
@@ -422,13 +441,14 @@ QmlWidgets.WBApplicationWindow {
         }
         QmlWidgets.WBButton01 {
             objectName: "button01"
-            text: "Or Click Me"
+            text: "'menuBar' infos"
 			MouseArea {
 				anchors.fill: parent
 				acceptedButtons:  Qt.AllButtons
 				
 				onClicked:
 				{
+                    resultsView.appendText("x: " + menuBar.x + "  y: " + menuBar.y + "  width: " + menuBar.width + "  height: " + menuBar.height + "  count: " + menuBar.count)
 					if(mouse.button & Qt.RightButton)
 						resultsView.appendText("Button 1 right clicked")
 					else
@@ -455,54 +475,65 @@ QmlWidgets.WBApplicationWindow {
 			}
 
         }
+
+    }
+    RowLayout {
+        id: rowLayout2
+
+        anchors {
+            top: rowLayout1.bottom
+            left: parent.left
+            topMargin: constants.menuHeight*2
+            leftMargin: 5
+        }
         QmlWidgets.WBButton03 {
             id: button03
             text: "Button Style 03"
-			MouseArea {
-				anchors.fill: parent
-				acceptedButtons:  Qt.AllButtons
-				
-				onClicked:
-				{
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons:  Qt.AllButtons
+                
+                onClicked:
+                {
                     resultsView.appendText("[+] searched by ID")
-					if(mouse.button & Qt.RightButton)
-						resultsView.appendText("Button 3 right clicked")
-					else
-						resultsView.appendText("Button 3 clicked")
-				}
-			}
+                    if(mouse.button & Qt.RightButton)
+                        resultsView.appendText("Button 3 right clicked")
+                    else
+                        resultsView.appendText("Button 3 clicked")
+                }
+            }
         }
         QmlWidgets.WBButton04 {
             id: button04
             text: "Button Style 04"
-			MouseArea {
-				anchors.fill: parent
-				acceptedButtons:  Qt.AllButtons
-				
-				onClicked:
-				{
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons:  Qt.AllButtons
+                
+                onClicked:
+                {
                     resultsView.appendText("[+] searched by ID")
-					if(mouse.button & Qt.RightButton)
-						resultsView.appendText("Button 4 right clicked")
+                    if(mouse.button & Qt.RightButton)
+                        resultsView.appendText("Button 4 right clicked")
                     if(mouse.button & Qt.MiddleButton)
                         resultsView.appendText("Button 4 middle clicked")
-					if(mouse.button & Qt.LeftButton)
-						resultsView.appendText("Button 4 left clicked")
-				}
-			}
+                    if(mouse.button & Qt.LeftButton)
+                        resultsView.appendText("Button 4 left clicked")
+                }
+            }
         }
         QmlWidgets.WBButton04 {
             id: clearButton
             text: "Clear Text"
-			MouseArea {
-				anchors.fill: parent
-				acceptedButtons:  Qt.LeftButton
-				
-				onClicked:
-				{
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons:  Qt.LeftButton
+                
+                onClicked:
+                {
                     resultsView.clearText()
                 }
-			}
+            }
         }
     }
 
