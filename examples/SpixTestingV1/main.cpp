@@ -11,6 +11,9 @@
 
 #include <iostream>
 
+#include <QtQml/QQmlDebuggingEnabler>
+QQmlDebuggingEnabler enabler;
+
 class MyTests : public spix::TestServer {
 protected:
     void executeTest() override
