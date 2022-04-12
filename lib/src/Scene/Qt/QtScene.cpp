@@ -4,6 +4,8 @@
  * See LICENSE.txt file in the project root for full license information.
  ****/
 
+#include <iostream>
+
 #include "QtScene.h"
 
 #include <Scene/Qt/QtItem.h>
@@ -56,6 +58,7 @@ QQuickItem* getQQuickItemWithRoot(const spix::ItemPath& path, QObject* root)
     } else {
         if (rootClassName == spix::qt::repeater_class_name) {
             QQuickItem* repeater = static_cast<QQuickItem*>(root);
+            std::cout << "[*] enter repeater case in getQQuickItemWith Root in QtScene.cpp with root=" << spix::qt::GetObjectName(root).toStdString() << "\n";
             subItem = spix::qt::RepeaterChildWithName(repeater, QString::fromStdString(itemName));
         } else {
             subItem = spix::qt::FindChildItem<QQuickItem*>(root, itemName.c_str());
@@ -63,9 +66,18 @@ QQuickItem* getQQuickItemWithRoot(const spix::ItemPath& path, QObject* root)
     }
 
     if (path.length() == 1) {
+        printf("[RETURN] in getQQuickItemWithRoot, find subItem | path=%s ; subItem=", path.string().c_str());
+        if(subItem != nullptr)
+            std::cout << spix::qt::GetObjectName(subItem).toStdString() << "\n";
+        else
+            std::cout << "nullptr" << "\n";
         return subItem;
     }
-
+    printf("[STEP] in getQQuickItemWithRoot | path=%s ; subItem=", path.string().c_str());
+    if(subItem != nullptr)
+        std::cout << spix::qt::GetObjectName(subItem).toStdString() << "\n";
+    else
+        std::cout << "nullptr" << "\n";
     return getQQuickItemWithRoot(path.subPath(1), subItem);
 }
 
@@ -95,6 +107,7 @@ namespace spix {
 std::unique_ptr<Item> QtScene::itemAtPath(const ItemPath& path)
 {
     auto windowName = path.rootComponent();
+    printf("[+] itemAtPath | path=%s ; root component=%s\n",path.string().c_str(), windowName.c_str());
     QQuickItem* item = getQQuickItemAtPath(path);
 
     if (item) {

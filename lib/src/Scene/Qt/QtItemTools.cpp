@@ -3,6 +3,7 @@
  * Licensed under the MIT license.
  * See LICENSE.txt file in the project root for full license information.
  ****/
+#include <iostream>
 
 #include "QtItemTools.h"
 
@@ -45,7 +46,7 @@ QQuickItem* RepeaterChildWithName(QQuickItem* repeater, const QString& name)
 QString GetObjectName(QObject* object)
 {
     if (object == nullptr) {
-        return "";
+        return "nullptr";
     }
 
     // Allow to override id with objectName
@@ -60,23 +61,29 @@ QString GetObjectName(QObject* object)
     return object->objectName();
 }
 
-QObject* FindChildItem(QObject* object, const QString& name)
+QObject* FindChildItem(QObject* object, const QString& name, int depth)
 {
+    //std::cout << "[LIST] Children of " << GetObjectName(object).toStdString() << "\n";
     if (auto qquickitem = qobject_cast<const QQuickItem*>(object)) {
+        //std::cout << "[+] Cast in QQuickItem* OK\n";
+
         for (auto child : qquickitem->childItems()) {
+            std::cout << std::string(depth, '\t') << " - " << GetObjectName(child).toStdString() << "\n";
             if (GetObjectName(child) == name) {
                 return child;
             }
-            if (auto item = FindChildItem(child, name)) {
+            if (auto item = FindChildItem(child, name, depth +1)) {
                 return item;
             }
         }
     } else {
+        //std::cout << "[+] NO Cast in QQuickItem* \n";
         for (auto child : object->children()) {
+            std::cout << std::string(depth, '\t') << " - " << GetObjectName(child).toStdString() << " [+] NOT A QQuickItem  \n";
             if (GetObjectName(child) == name) {
                 return child;
             }
-            if (auto item = FindChildItem(child, name)) {
+            if (auto item = FindChildItem(child, name, depth + 1)) {
                 return item;
             }
         }

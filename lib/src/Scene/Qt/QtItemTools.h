@@ -29,7 +29,7 @@ QString GetObjectName(QObject* object);
  * encounters a `QQuickItem`, it no longer iterates over the object's
  * `children()`, but rather its `childItems()`.
  */
-QObject* FindChildItem(QObject* object, const QString& name);
+QObject* FindChildItem(QObject* object, const QString& name, int depth = 0);
 
 template <typename T>
 T FindChildItem(QObject* object, const QString& name)
