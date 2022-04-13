@@ -65,7 +65,7 @@ public:
     void quit();
 
     //own added
-    void listChildren(ItemPath path);
+    void listChildren(ItemPath path, bool recursively);
 
 protected:
     virtual void executeTest() = 0;

@@ -108,7 +108,7 @@ namespace spix {
 std::unique_ptr<Item> QtScene::itemAtPath(const ItemPath& path)
 {
     auto windowName = path.rootComponent();
-    printf("[+] itemAtPath | path=%s ; root component=%s\n",path.string().c_str(), windowName.c_str());
+    printf("[START] itemAtPath | path=%s ; root component=%s\n",path.string().c_str(), windowName.c_str());
     QQuickItem* item = getQQuickItemAtPath(path);
 
     if (item) {
@@ -117,6 +117,7 @@ std::unique_ptr<Item> QtScene::itemAtPath(const ItemPath& path)
     return std::unique_ptr<QtItem>();
 }
 
+//own added
 std::vector<std::string> QtScene::listChildrenAtPath(const ItemPath& path){
 
     QQuickItem* item = getQQuickItemAtPath(path);
@@ -136,6 +137,12 @@ std::vector<std::string> QtScene::listChildrenAtPath(const ItemPath& path){
 
     return children;
 }
+
+
+void QtScene::listEveryChildrenAtPath(const ItemPath& path ){
+    spix::qt::ListEveryChildren(getQQuickItemAtPath(path));
+}
+
 
 Events& QtScene::events()
 {

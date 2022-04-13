@@ -31,6 +31,7 @@ public:
 
     //own added 
     std::vector<std::string> listChildrenAtPath(const ItemPath& );
+    void listEveryChildrenAtPath(const ItemPath& );
 
 private:
     QtEvents m_events;

@@ -8,8 +8,9 @@
 namespace spix {
 namespace cmd {
 
-ListChildren::ListChildren(ItemPosition path)
-: m_position(std::move(path))
+ListChildren::ListChildren(ItemPosition path, bool recursively)
+: m_position(std::move(path)),
+m_recursively(recursively)
 {
 }
 
@@ -23,9 +24,15 @@ void ListChildren::execute(CommandEnvironment& env)
         return;
     }
 
-    for(std::string child : env.scene().listChildrenAtPath(path)){
-        std::cout << " - " << child << "\n";
+    if(!m_recursively){
+        for(std::string child : env.scene().listChildrenAtPath(path)){
+            std::cout << " - " << child << "\n";
+        }
+    } else {
+        env.scene().listEveryChildrenAtPath(path);
     }
+
+
 }
 
 } // namespace cmd

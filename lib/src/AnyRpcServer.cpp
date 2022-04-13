@@ -103,7 +103,11 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
 
     utils::AddFunctionToAnyRpc<void(std::string)>(methodManager, "list", 
         "List children of an item | list(string path)",
-        [this](std::string path) { listChildren(std::move(path)); });
+        [this](std::string path) { listChildren(std::move(path), false); });
+    
+    utils::AddFunctionToAnyRpc<void(std::string)>(methodManager, "listAll", 
+        "List children (and its descendants) of an item | listAll(string path)",
+        [this](std::string path) { listChildren(std::move(path), true); });
 
 
     m_pimpl->server->BindAndListen(anyrpcPort);

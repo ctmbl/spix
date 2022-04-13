@@ -163,8 +163,8 @@ void TestServer::quit()
 }
 
 //own added
-void TestServer::listChildren(ItemPath path){
-    m_cmdExec->enqueueCommand<cmd::ListChildren>(path);
+void TestServer::listChildren(ItemPath path, bool recursively){
+    m_cmdExec->enqueueCommand<cmd::ListChildren>(path, recursively);
 }
 
 

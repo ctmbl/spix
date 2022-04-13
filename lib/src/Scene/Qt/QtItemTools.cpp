@@ -92,5 +92,23 @@ QObject* FindChildItem(QObject* object, const QString& name, int depth)
     return nullptr;
 }
 
+QObject* ListEveryChildren(QObject* object, int depth)
+{
+    if (auto qquickitem = qobject_cast<const QQuickItem*>(object)) {
+
+        for (auto child : qquickitem->childItems()) {
+            std::cout << std::string(depth, '\t') << " - " << GetObjectName(child).toStdString() << "\n";
+            ListEveryChildren(child, depth +1);
+        }
+    } else {
+        for (auto child : object->children()) {
+            std::cout << std::string(depth, '\t') << " - " << GetObjectName(child).toStdString() << " [+] NOT A QQuickItem  \n";
+            ListEveryChildren(child, depth + 1);
+        }
+    }
+
+    return nullptr;
+}
+
 } // namespace qt
 } // namespace spix

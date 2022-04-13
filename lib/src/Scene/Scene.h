@@ -43,6 +43,7 @@ public:
 
     //own added 
     virtual std::vector<std::string> listChildrenAtPath(const ItemPath& ) = 0;
+    virtual void listEveryChildrenAtPath(const ItemPath& ) = 0;
 };
 
 } // namespace spix
