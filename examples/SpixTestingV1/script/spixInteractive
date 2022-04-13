@@ -19,13 +19,22 @@ def help():
 def spix(cmd):
     if cmd == None:
         print("help   :   >>> help()|sHelp()|spixHelp()    // to print help") 
-        print("help   :   >>> spix('<command>|all')        // to display <command> help and examples") 
+        print("help   :   >>> spix('<command>|all|func')   // to display <command> help|examples|useful functions") 
+        print("help   :   >>> cd('path/to/item')           // to change current_item (see pwd())") 
         return
     if cmd == "all":
         print("help:  List of methods and their signatures")
         for method in s.system.listMethods():
             print("\t- ",f"{method:20s}", " : ", end="")
             spix(method)
+        return
+    if cmd == "func":
+        print("help:  List of useful functionalities")
+        print("\t- pwd()                          : return current item position")
+        print("\t- cd('path/to/item|../../item')  : change current item position")
+        print("\t- ls()                           : list current item children")
+        print("\t- lsa()                          : list current item children and their children")
+        print("\t- c()                            : click on current item")
         return
     try:
         print(s.system.methodHelp(cmd))
@@ -58,6 +67,9 @@ def pwd():
 
 def ls():
     s.list(pwd())
+
+def lsa():
+    s.listAll(pwd())
 
 def c():
     s.mouseClick(pwd())
