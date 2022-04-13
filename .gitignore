@@ -3,3 +3,7 @@
 .idea
 build
 dep-libs
+build_qtcreator
+*.txt.user
+.vscode
+
