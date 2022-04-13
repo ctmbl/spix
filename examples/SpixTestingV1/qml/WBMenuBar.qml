@@ -10,6 +10,8 @@ MenuBar {
     delegate: MenuBarItem {
         id: menuBarItem
 
+        objectName: menu.objectName + "_item"
+
         implicitHeight: constants.menuHeight
 
         contentItem: Text {

@@ -44,7 +44,6 @@ QmlWidgets.WBApplicationWindow {
 
         QmlWidgets.WBMenu {
             objectName: "file"
-            id: file
             title: qsTr("File")
             QmlWidgets.WBMenuItem { 
                 text: qsTr("New...")
@@ -171,7 +170,7 @@ QmlWidgets.WBApplicationWindow {
 
         QmlWidgets.WBMenu {
             title: qsTr("Edit")
-            id: edit
+            objectName: "edit"
 
             QmlWidgets.WBMenuItem {
                 text: qsTr("Undo ")  + undoRedoManager.undoText + " (CTRL+Z)"
@@ -249,7 +248,7 @@ QmlWidgets.WBApplicationWindow {
         }
 
         QmlWidgets.WBMenu {
-            id: tools
+            objectName: "tools"
             title: qsTr("Tools")
 
             QmlWidgets.WBMenu {
@@ -393,8 +392,8 @@ QmlWidgets.WBApplicationWindow {
 
         QmlWidgets.WBMenu {
             title: qsTr("Help")
-            id: help
-
+            objectName: "help"
+            
             QmlWidgets.WBMenuItem {
                 text: qsTr("Documentations...")
                 onTriggered: {
