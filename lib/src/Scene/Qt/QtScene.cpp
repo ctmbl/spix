@@ -5,6 +5,7 @@
  ****/
 
 #include <iostream>
+#include <vector>
 
 #include "QtScene.h"
 
@@ -114,6 +115,26 @@ std::unique_ptr<Item> QtScene::itemAtPath(const ItemPath& path)
         return std::make_unique<QtItem>(item);
     }
     return std::unique_ptr<QtItem>();
+}
+
+std::vector<std::string> QtScene::listChildrenAtPath(const ItemPath& path){
+
+    QQuickItem* item = getQQuickItemAtPath(path);
+
+    std::vector<std::string> children = {};
+
+    if (auto qquickitem = qobject_cast<const QQuickItem*>(item)) {
+
+        for (auto child : qquickitem->childItems()) {
+            children.push_back(spix::qt::GetObjectName(child).toStdString());
+        }
+    } else {
+        for (auto child : item->children()) {
+            children.push_back(spix::qt::GetObjectName(child).toStdString());
+        }
+    }
+
+    return children;
 }
 
 Events& QtScene::events()

@@ -101,6 +101,11 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
 
     utils::AddFunctionToAnyRpc<void()>(methodManager, "dummy", "Dummy function to test implementations in Spix", [this] { printf("[*] Dummy function activated\n"); });
 
+    utils::AddFunctionToAnyRpc<void(std::string)>(methodManager, "list", 
+        "List children of an item | list(string path)",
+        [this](std::string path) { listChildren(std::move(path)); });
+
+
     m_pimpl->server->BindAndListen(anyrpcPort);
 }
 

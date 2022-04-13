@@ -29,6 +29,9 @@ public:
     // Tasks
     void takeScreenshot(const ItemPath& targetItem, const std::string& filePath) override;
 
+    //own added 
+    std::vector<std::string> listChildrenAtPath(const ItemPath& );
+
 private:
     QtEvents m_events;
 };

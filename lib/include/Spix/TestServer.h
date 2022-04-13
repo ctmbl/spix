@@ -64,6 +64,9 @@ public:
     void takeScreenshot(ItemPath targetItem, std::string filePath);
     void quit();
 
+    //own added
+    void listChildren(ItemPath path);
+
 protected:
     virtual void executeTest() = 0;
 

@@ -14,6 +14,9 @@
 #include <memory>
 #include <string>
 
+#include <QObject>
+
+
 namespace spix {
 
 class PasteboardContent;
@@ -37,6 +40,9 @@ public:
 
     // Tasks
     virtual void takeScreenshot(const ItemPath& targetItem, const std::string& filePath) = 0;
+
+    //own added 
+    virtual std::vector<std::string> listChildrenAtPath(const ItemPath& ) = 0;
 };
 
 } // namespace spix

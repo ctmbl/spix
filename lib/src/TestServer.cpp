@@ -24,6 +24,9 @@
 #include <Commands/SetProperty.h>
 #include <Commands/Wait.h>
 
+//own added
+#include <Commands/ListChildren.h>
+
 #include <Spix/Events/Identifiers.h>
 
 namespace spix {
@@ -158,5 +161,12 @@ void TestServer::quit()
 {
     m_cmdExec->enqueueCommand<cmd::Quit>();
 }
+
+//own added
+void TestServer::listChildren(ItemPath path){
+    m_cmdExec->enqueueCommand<cmd::ListChildren>(path);
+}
+
+
 
 } // namespace spix

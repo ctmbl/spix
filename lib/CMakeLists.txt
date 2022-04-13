@@ -62,6 +62,10 @@ set(SOURCES
     src/Commands/SetProperty.h
     src/Commands/Wait.cpp
     src/Commands/Wait.h
+    
+    #own added
+    src/Commands/ListChildren.cpp
+    src/Commands/ListChildren.h
 
     src/CommandExecuter/CommandEnvironment.cpp
     src/CommandExecuter/CommandEnvironment.h
