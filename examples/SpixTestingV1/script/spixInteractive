@@ -32,6 +32,35 @@ def spix(cmd):
     except xmlrpc.client.Fault:
         print("[-] Unknown method name from anyRPC")
 
+# Wrappers
+current_item = []
+
+def cd(rel_path):
+    global current_item
+    rel_path = rel_path.split("/")
+    rel_path = [e for e in rel_path if e]
+    rel_path = rel_path[::-1]
+    while rel_path:
+        p=rel_path.pop()
+        if p == "..":
+            if current_item:
+                current_item.pop()
+            else: 
+                print("[+] already at root")
+            continue
+        if s.existsAndVisible(pwd()+"/"+p):
+            current_item.append(p)        
+        else:
+            print("[-]",p,"at '" + pwd() + "' is inaccessible")
+
+def pwd():
+    return "/".join(current_item)
+
+def ls():
+    s.list(pwd())
+
+def c():
+    s.mouseClick(pwd())
 
 s = xmlrpc.client.ServerProxy('http://localhost:9000')
 sHelp()
