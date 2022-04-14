@@ -32,9 +32,11 @@ def spix(cmd):
         print("help:  List of useful functionalities")
         print("\t- pwd()                          : return current item position")
         print("\t- cd('path/to/item|../../item')  : change current item position")
-        print("\t- ls()                           : list current item children")
-        print("\t- lsa()                          : list current item children and their children")
-        print("\t- c()                            : click on current item")
+        print("\t- ls(<empty>|'relative/path')    : list item children")
+        print("\t- lsa(<empty>|'relative/path')   : list item children and their children")
+        print("\t- c(<empty>|'relative/path')     : click on specified (or current if not) item")
+        print("\t- get(prop, path='', no_check=False)         : get property 'prop' of item at 'path'; path is optional (pwd() by default); no_check optional")
+        print("\t- set(prop, value, path='', no_check=False)  : set property 'prop' of item at 'path' at value 'value'; path is optional (pwd() by default); no_check optional")
         return
     try:
         print(s.system.methodHelp(cmd))
@@ -42,37 +44,71 @@ def spix(cmd):
         print("[-] Unknown method name from anyRPC")
 
 # Wrappers
-current_item = []
+current_path = []
 
-def cd(rel_path):
-    global current_item
+def handle_rel_path(rel_path,temp_path, no_check=False):
     rel_path = rel_path.split("/")
     rel_path = [e for e in rel_path if e]
     rel_path = rel_path[::-1]
     while rel_path:
         p=rel_path.pop()
         if p == "..":
-            if current_item:
-                current_item.pop()
+            if temp_path:
+               temp_path.pop()
             else: 
                 print("[+] already at root")
             continue
-        if s.existsAndVisible(pwd()+"/"+p):
-            current_item.append(p)        
+        if s.existsAndVisible(pwd(temp_path)+"/"+p) or no_check:
+            temp_path.append(p)        
         else:
-            print("[-]",p,"at '" + pwd() + "' is inaccessible")
+            print("[-]",p,"at path='" + pwd(temp_path) + "' is inaccessible")
+            print("[-] cutting your path after '"+p+"' ;", rel_path[::-1],"not taken into account")
+            break
 
-def pwd():
-    return "/".join(current_item)
+def cd(rel_path):
+    global current_path
+    handle_rel_path(rel_path,current_path)
+    
+def pwd(path=current_path):
+    return "/".join(path)
 
-def ls():
-    s.list(pwd())
 
-def lsa():
-    s.listAll(pwd())
+def methods_wrapper(path,func, prop=None, value=None, no_check=False):
+    if path:
+        temp_path = current_path[:]
+        handle_rel_path(path,temp_path, no_check=no_check)
+        path = pwd(temp_path)
+        if not path:
+            print("[-] CAUTION: this relative path lead to empty path")
+            return
+    else:
+        path = pwd()
+        if not path:
+            print("[-] CAUTION: pwd() is empty !")
+            return
+    if path:
+        if prop:
+            if value:
+                func(path, prop, value)
+                return
+            func(path, prop)
+            return
+        func(path)
 
-def c():
-    s.mouseClick(pwd())
+def ls(path=""):
+    methods_wrapper(path, s.list)
+
+def lsa(path=""):
+    methods_wrapper(path, s.listAll)
+
+def c(path=""):
+    methods_wrapper(path, s.mouseClick)
+
+def get(prop, path="",no_check=False):
+    methods_wrapper(path, s.getStringProperty, prop, no_check=no_check)
+
+def set(prop, value, path="",no_check=False):
+    methods_wrapper(path, s.setStringProperty, prop, value, no_check=no_check)
 
 s = xmlrpc.client.ServerProxy('http://localhost:9000')
 sHelp()
