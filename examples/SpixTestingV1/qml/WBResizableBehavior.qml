@@ -20,6 +20,7 @@ Item {
 
     // Manage window resize - right
     WBResizableBehaviorTemplate {
+        id: resizableBehaviorRight
         enabled: root.enabled && root.allowRightResize
         target: root.target
         anchors.right: parent.right
@@ -30,6 +31,7 @@ Item {
 
     // Manage window resize - left
     WBResizableBehaviorTemplate {
+        id: resizableBehaviorLeft
         enabled: root.enabled && root.allowLeftResize
         target: root.target
         anchors.left: parent.left
@@ -40,6 +42,7 @@ Item {
 
     // Manage window resize - bottom
     WBResizableBehaviorTemplate {
+        id: resizableBehaviorBottom
         enabled: root.enabled && root.allowBottomResize
         target: root.target
         anchors.bottom: parent.bottom
@@ -50,6 +53,7 @@ Item {
 
     // Manage window resize - top
     WBResizableBehaviorTemplate {
+        id: resizableBehaviorTop
         enabled: root.enabled && root.allowTopResize
         target: root.target
         anchors.top: parent.top
@@ -60,6 +64,7 @@ Item {
 
     // Manage window resize - top-left
     WBResizableBehaviorTemplate {
+        id: resizableBehaviorTL
         enabled: root.enabled && root.allowTopResize && root.allowLeftResize
         target: root.target
         anchors.top: parent.top
@@ -71,6 +76,7 @@ Item {
 
     // Manage window resize - top-right
     WBResizableBehaviorTemplate {
+        id: resizableBehaviorTR
         enabled: root.enabled && root.allowTopResize && root.allowRightResize
         target: root.target
         anchors.top: parent.top
@@ -82,6 +88,7 @@ Item {
 
     // Manage window resize - bottom-right
     WBResizableBehaviorTemplate {
+        id: resizableBehaviorBR
         enabled: root.enabled && root.allowBottomResize && root.allowRightResize
         target: root.target
         anchors.bottom: parent.bottom
@@ -93,6 +100,7 @@ Item {
 
     // Manage window resize - bottom-left
     WBResizableBehaviorTemplate {
+        id: resizableBehaviorBL
         enabled: root.enabled && root.allowBottomResize && root.allowLeftResize
         target: root.target
         anchors.bottom: parent.bottom

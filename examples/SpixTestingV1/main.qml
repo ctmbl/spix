@@ -428,8 +428,8 @@ QmlWidgets.WBApplicationWindow {
         title: qsTr("Rename simulation")
         label: qsTr("Simulation")
 
-        resizable: true
-        movable: true
+        resizable: false
+        movable: false
 
         onAccepted: {
             resultsView.appendText("[FILE][Rename] Simulation renamed to '" + text +"'")

@@ -2,7 +2,7 @@ import QtQuick 2.13
 import QtQuick.Controls 2.13
 
 // NF frameworks
-//import Workbench 1.0
+import Workbench 1.0
 //import "qrc:/js/utils.js" as JsUtils
 
 WBPopupBase {
@@ -53,6 +53,7 @@ WBPopupBase {
         }
 
         WBBottomRoundedRectangle {
+            id: background
             y: headerLoader.height
             width: root.width
             height: contentLoader.height
