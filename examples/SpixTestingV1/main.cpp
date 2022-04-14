@@ -11,6 +11,8 @@
 
 #include <iostream>
 
+#include "workbench_enums.h"
+
 #include <QtQml/QQmlDebuggingEnabler>
 QQmlDebuggingEnabler enabler;
 
@@ -38,6 +40,9 @@ protected:
 
 int main(int argc, char* argv[])
 {
+
+    WorkbenchEnums::init();
+
     // Init Qt Qml Application
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;

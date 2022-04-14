@@ -6,6 +6,7 @@ import QtQuick.Layouts 1.11
 import "qrc:/qml/" as QmlWidgets
 
 QmlWidgets.WBApplicationWindow {
+    id: applicationWindow
     objectName: "mainWindow"
     visible: true
     width: 640
@@ -19,9 +20,16 @@ QmlWidgets.WBApplicationWindow {
 
     menuBar: QmlWidgets.WBMenuBar {
         objectName: "menuBar"
-        id: menuBar
+        id: menuBar 
 
         //title: "studioMenuBarSimplified"
+
+        Shortcut {
+        sequence: "Ctrl+S"
+        onActivated: {
+            resultsView.appendText("[SHORTCUT] " + sequence + " triggered")
+        }
+    }
        
         
         Menu {
@@ -44,6 +52,7 @@ QmlWidgets.WBApplicationWindow {
 
         QmlWidgets.WBMenu {
             objectName: "file"
+            id: file
             title: qsTr("File")
             QmlWidgets.WBMenuItem { 
                 text: qsTr("New...")
@@ -84,16 +93,17 @@ QmlWidgets.WBApplicationWindow {
             }
             QmlWidgets.WBMenuItem {
                 text: qsTr("Rename...")
+                objectName: "rename"
                 enabled: simulationDataController.simulationState === Simulation.Opened
                 onTriggered: {
-                    renameSimulationWindow.text = currentSimulationModel.simulationName
+                    renameSimulationWindow.text = "simulation name"
                     renameSimulationWindow.visible = true
                 }
             }
             QmlWidgets.WBMenuItem {
                 text: qsTr("Save (CTRL+S)")
                 enabled: simulationDataController.simulationState === Simulation.Opened
-                onTriggered: saveSimulation()
+                onTriggered: resultsView.appendText("[FILE][Save] saved")
             }
             QmlWidgets.WBMenuItem {
                 text: qsTr("Save as...")
@@ -171,7 +181,7 @@ QmlWidgets.WBApplicationWindow {
         QmlWidgets.WBMenu {
             title: qsTr("Edit")
             objectName: "edit"
-
+            id: edit
             QmlWidgets.WBMenuItem {
                 text: qsTr("Undo ")  + undoRedoManager.undoText + " (CTRL+Z)"
                 enabled:
@@ -250,7 +260,7 @@ QmlWidgets.WBApplicationWindow {
         QmlWidgets.WBMenu {
             objectName: "tools"
             title: qsTr("Tools")
-
+            id: tools
             QmlWidgets.WBMenu {
                 title: qsTr("Theme")
 
@@ -393,7 +403,7 @@ QmlWidgets.WBApplicationWindow {
         QmlWidgets.WBMenu {
             title: qsTr("Help")
             objectName: "help"
-            
+            id: help
             QmlWidgets.WBMenuItem {
                 text: qsTr("Documentations...")
                 onTriggered: {
@@ -407,6 +417,41 @@ QmlWidgets.WBApplicationWindow {
                     aboutWindow.contentText = aboutText
                     aboutWindow.visible = true
                 }
+            }
+        }
+    }
+
+        QmlWidgets.WBInputWindow {
+        id: renameSimulationWindow
+        objectName: "renameSimulationWindow"
+
+        title: qsTr("Rename simulation")
+        label: qsTr("Simulation")
+
+        resizable: true
+        movable: true
+
+        onAccepted: {
+            resultsView.appendText("[FILE][Rename] Simulation renamed to '" + text +"'")
+            //simulationDataController.updateSimulationName(simulationDataController.openedSimulationId, text)
+            visible = false
+        }
+
+        onRejected: {
+            resultsView.appendText("[FILE][Rename] Simulation renaming cancelled")
+            visible = false
+        }
+
+        onKeysPressed: {
+            if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return) {
+                //simulationDataController.updateSimulationName(simulationDataController.openedSimulationId, text)
+                visible = false
+                event.accepted = true
+            }
+
+            if (event.key === Qt.Key_Escape) {
+                visible = false
+                event.accepted = true
             }
         }
     }

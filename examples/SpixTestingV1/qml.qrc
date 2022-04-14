@@ -2,6 +2,7 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>ResultsView.qml</file>
+
 		<file>qml/ProjectListEntry.qml</file>
 		<file>qml/ProjectListToolBar.qml</file>
 		<file>qml/ProjectListView.qml</file>
@@ -25,11 +26,13 @@
 		<file>qml/WBMenuSeparator.qml</file>
 		<file>qml/WBConstants.qml</file>
 		<file>qml/WBApplicationWindow.qml</file>
+
 		<file>theme/CustomTheme.qml</file>
         <file>theme/DarkTheme.qml</file>
         <file>theme/LightTheme.qml</file>
         <file>theme/OceanTheme.qml</file>
         <file>theme/ThemeManager.qml</file>
+
 		<file>fonts/B612 Mono-Bold.ttf</file>
 		<file>fonts/B612 Mono-BoldItalic.ttf</file>
 		<file>fonts/B612 Mono-Italic.ttf</file>
@@ -38,6 +41,32 @@
 		<file>fonts/B612-BoldItalic.ttf</file>
 		<file>fonts/B612-Italic.ttf</file>
 		<file>fonts/B612-Regular.ttf</file>
+
+		<file>qml/WBInputWindow.qml</file>
+		<file>qml/WBWindowHeader.qml</file>
+		<file>qml/WBInputFieldString.qml</file>
+		<file>qml/WBPopup.qml</file>
+		<file>qml/WBPopupBase.qml</file>
+		<file>qml/WBPopupMenu.qml</file>
+		<file>qml/WBBottomRoundedRectangle.qml</file>
+		<file>qml/WBResizableBehavior.qml</file>
+		<file>qml/WBResizableBehaviorTemplate.qml</file>
+		<file>qml/WBMovableBehavior.qml</file>
+		<file>qml/WBTopRoundedRectangle.qml</file>
+		<file>qml/WBInputFieldBase.qml</file>
+		<file>qml/WBIconButton.qml</file>
+		<file>qml/WBRoundedRectangle.qml</file>
+		<file>qml/WBRoundedRectangle2.qml</file>
+		<file>qml/WBTextField.qml</file>
+		<file>qml/WBImage.qml</file>
+
+		<file>svg/Lists/Input_Field.svg</file>
+		<file>svg/Lists/Restore.svg</file>
+
+		
+		
+		
+		
     </qresource>
 </RCC>
 
