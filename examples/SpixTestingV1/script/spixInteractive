@@ -110,6 +110,13 @@ def get(prop, path="",no_check=False):
 def set(prop, value, path="",no_check=False):
     methods_wrapper(path, s.setStringProperty, prop, value, no_check=no_check)
 
+def screen(img_path, path=""):
+    img_format = [".png",".bmp",".gif",".jpg"]
+    if not img_path[-4:] in img_format:
+        print("[-] can't take screenshot, add one of these extension:",img_format)
+        return
+    methods_wrapper(path,s.takeScreenshot,img_path)
+
 s = xmlrpc.client.ServerProxy('http://localhost:9000')
 sHelp()
 
