@@ -14,6 +14,7 @@ find_package(Qt${SPIX_QT_MAJOR}
         Core
         Gui
         Quick
+        Test
     REQUIRED)
 message("Building Spix for Qt ${SPIX_QT_MAJOR}")
 
@@ -131,6 +132,7 @@ target_link_libraries(Spix
         Qt${SPIX_QT_MAJOR}::Core
         Qt${SPIX_QT_MAJOR}::Gui
         Qt${SPIX_QT_MAJOR}::Quick
+        Qt${SPIX_QT_MAJOR}::Test
     PRIVATE
         AnyRPC::anyrpc
 )

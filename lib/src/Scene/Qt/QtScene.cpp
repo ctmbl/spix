@@ -117,33 +117,6 @@ std::unique_ptr<Item> QtScene::itemAtPath(const ItemPath& path)
     return std::unique_ptr<QtItem>();
 }
 
-//own added
-std::vector<std::string> QtScene::listChildrenAtPath(const ItemPath& path){
-
-    QQuickItem* item = getQQuickItemAtPath(path);
-
-    std::vector<std::string> children = {};
-
-    if (auto qquickitem = qobject_cast<const QQuickItem*>(item)) {
-
-        for (auto child : qquickitem->childItems()) {
-            children.push_back(spix::qt::GetObjectName(child).toStdString());
-        }
-    } else {
-        for (auto child : item->children()) {
-            children.push_back(spix::qt::GetObjectName(child).toStdString());
-        }
-    }
-
-    return children;
-}
-
-
-void QtScene::listEveryChildrenAtPath(const ItemPath& path ){
-    spix::qt::ListEveryChildren(getQQuickItemAtPath(path));
-}
-
-
 Events& QtScene::events()
 {
     return m_events;
@@ -169,6 +142,33 @@ void QtScene::takeScreenshot(const ItemPath& targetItem, const std::string& file
     // crop the window image to the item rect
     auto image = windowImage.copy(imageCropRect);
     image.save(QString::fromStdString(filePath));
+}
+
+
+//own added
+std::vector<std::string> QtScene::listChildrenAtPath(const ItemPath& path){
+
+    QQuickItem* item = getQQuickItemAtPath(path);
+
+    std::vector<std::string> children = {};
+
+    if (auto qquickitem = qobject_cast<const QQuickItem*>(item)) {
+
+        for (auto child : qquickitem->childItems()) {
+            children.push_back(spix::qt::GetObjectName(child).toStdString());
+        }
+    } else {
+        for (auto child : item->children()) {
+            children.push_back(spix::qt::GetObjectName(child).toStdString());
+        }
+    }
+
+    return children;
+}
+
+
+void QtScene::listEveryChildrenAtPath(const ItemPath& path ){
+    spix::qt::ListEveryChildren(getQQuickItemAtPath(path));
 }
 
 } // namespace spix

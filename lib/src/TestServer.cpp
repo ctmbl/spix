@@ -167,6 +167,12 @@ void TestServer::listChildren(ItemPath path, bool recursively){
     m_cmdExec->enqueueCommand<cmd::ListChildren>(path, recursively);
 }
 
+void TestServer::waitForSignal(ItemPath path, int timeout){
+    m_cmdExec->enqueueCommand<cmd::Wait>(path, timeout);
+}
+
+
+
 
 
 } // namespace spix

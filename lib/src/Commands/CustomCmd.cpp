@@ -20,7 +20,7 @@ void CustomCmd::execute(spix::CommandEnvironment& env)
     m_exec(env);
 }
 
-bool CustomCmd::canExecuteNow()
+bool CustomCmd::canExecuteNow(spix::CommandEnvironment& env)
 {
     return m_canExec();
 }

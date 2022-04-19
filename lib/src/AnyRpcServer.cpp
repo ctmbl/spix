@@ -99,7 +99,10 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
         "Executes a generic command | command(string command, string payload)",
         [this](std::string command, std::string payload) { genericCommand(command, payload); });
 
-    utils::AddFunctionToAnyRpc<void()>(methodManager, "dummy", "Dummy function to test implementations in Spix", [this] { printf("[*] Dummy function activated\n"); });
+    //own added
+    utils::AddFunctionToAnyRpc<void()>(methodManager, "dummy", 
+        "Dummy function to test implementations in Spix | dummy()",
+        [this] { printf("[*] Dummy function activated\n"); });
 
     utils::AddFunctionToAnyRpc<void(std::string)>(methodManager, "list", 
         "List children of an item | list(string path)",
@@ -108,6 +111,10 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
     utils::AddFunctionToAnyRpc<void(std::string)>(methodManager, "listAll", 
         "List children (and its descendants) of an item | listAll(string path)",
         [this](std::string path) { listChildren(std::move(path), true); });
+    
+    utils::AddFunctionToAnyRpc<void(std::string, int)>(methodManager, "waitForSignal", 
+        "It waits for a specified signal or a timeout before continuing execution | waitForSignal(string path, int timeout_in_ms)",
+        [this](std::string path, int timeout = 5000) { waitForSignal(std::move(path), timeout); });
 
 
     m_pimpl->server->BindAndListen(anyrpcPort);

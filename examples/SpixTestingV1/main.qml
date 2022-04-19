@@ -489,6 +489,7 @@ QmlWidgets.WBApplicationWindow {
 			MouseArea {
 				anchors.fill: parent
 				acceptedButtons:  Qt.AllButtons
+                objectName: "mouseArea"
 				
 				onClicked:
 				{
@@ -578,6 +579,12 @@ QmlWidgets.WBApplicationWindow {
                     resultsView.clearText()
                 }
             }
+        }
+        Button{
+            objectName: "button"
+            text: "Simple Button"
+            onClicked: resultsView.appendText("simple button clicked")
+
         }
     }
 

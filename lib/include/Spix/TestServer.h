@@ -66,6 +66,7 @@ public:
 
     //own added
     void listChildren(ItemPath path, bool recursively);
+    void waitForSignal(ItemPath path, int timeout);
 
 protected:
     virtual void executeTest() = 0;

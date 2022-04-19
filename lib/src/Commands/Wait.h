@@ -8,6 +8,10 @@
 
 #include "Command.h"
 
+#include <Spix/Data/ItemPosition.h>
+#include <Scene/Events.h>
+
+#include <functional>
 #include <chrono>
 
 namespace spix {
@@ -16,14 +20,24 @@ namespace cmd {
 class Wait : public Command {
 public:
     Wait(std::chrono::milliseconds waitTime);
+    //own added
+    Wait(ItemPosition path, int timeout);
 
     void execute(CommandEnvironment&) override;
-    bool canExecuteNow() override;
+    bool canExecuteNow(CommandEnvironment& env) override; //env param own added
+
+    //own added
+    bool timerWaitFor();
+    bool signalWaitFor(CommandEnvironment& env);
 
 private:
     bool m_timerInitialized = false;
     std::chrono::steady_clock::time_point m_startTime;
     std::chrono::milliseconds m_waitTime;
+
+    //own added
+    ItemPosition m_position;
+    int m_timeout;
 };
 
 } // namespace cmd

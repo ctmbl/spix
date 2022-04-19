@@ -34,7 +34,7 @@ QObject* FindChildItem(QObject* object, const QString& name, int depth = 0);
 QObject* ListEveryChildren(QObject* object, int depth = 0);
 
 template <typename T>
-T FindChildItem(QObject* object, const QString& name)
+T FindChildItem(QObject* object, const QString& name, int depth = 0)
 {
     return qobject_cast<T>(FindChildItem(object, name));
 }
