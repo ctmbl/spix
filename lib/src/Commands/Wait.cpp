@@ -10,6 +10,7 @@
 #include <Scene/Qt/QtItem.h>
 #include <Scene/Qt/QtItemTools.h>
 #include <QSignalSpy>
+#include <QMouseEvent>
 
 #include <iostream>
 
@@ -18,25 +19,25 @@ namespace cmd {
 
 Wait::Wait(std::chrono::milliseconds waitTime)
 : m_waitTime(waitTime),
-m_position(""),
+m_path(""),
 m_timeout(-1)
 {
 }
 
-Wait::Wait(ItemPosition path, int timeout)
+Wait::Wait(ItemPath path, int timeout)
 : m_waitTime(std::chrono::milliseconds(0)),
-m_position(path),
+m_path(path),
 m_timeout(timeout)
 {
 }
 
-void Wait::execute(CommandEnvironment&)
+void Wait::execute(CommandEnvironment& env)
 {
 }
 
 bool Wait::canExecuteNow(CommandEnvironment& env)
 {
-    if(m_position.itemPath().string().empty()){
+    if(m_path.string().empty()){
         return timerWaitFor();
     }
     return signalWaitFor(env);
@@ -54,14 +55,16 @@ bool Wait::timerWaitFor(){
 }
 
 bool Wait::signalWaitFor(CommandEnvironment& env){
-    auto path = m_position.itemPath();
-    auto item = static_cast<QtItem*>(env.scene().itemAtPath(path).release());
+    auto item = static_cast<QtItem*>(env.scene().itemAtPath(m_path).get()); //maybe should i use a dynamic_cast here, items return by itemAtPath currently are QtItem but maybe won't be for ever
 
     if (!item) {
-        env.state().reportError("WaitForSignal: [NOTFOUND] Item not found: " + path.string());
-        std::cout << "[SIGNAL] Item not found: " << path.string() << "\n";
+        env.state().reportError("WaitForSignal: [NOTFOUND] Item not found (or cast didn't work ?): " + m_path.string());
+        std::cout << "[SIGNAL] Item not found (or cast didn't work ?): " << m_path.string() << "\n";
         return true;
     }
+
+    auto mo = ((QObject*)item->qquickitem())->metaObject();
+    auto signal = mo->method(mo->indexOfSignal("clicked()"));
 
 
     QSignalSpy spy((QObject*)item->qquickitem(), SIGNAL(clicked()));

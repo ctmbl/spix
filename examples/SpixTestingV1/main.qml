@@ -1,4 +1,4 @@
-import QtQuick 2.11
+import QtQuick 2.15
 import QtQuick.Window 2.11
 import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.11
@@ -25,11 +25,11 @@ QmlWidgets.WBApplicationWindow {
         //title: "studioMenuBarSimplified"
 
         Shortcut {
-        sequence: "Ctrl+S"
-        onActivated: {
-            resultsView.appendText("[SHORTCUT] " + sequence + " triggered")
+            sequence: "Ctrl+S"
+            onActivated: {
+                resultsView.appendText("[SHORTCUT] " + sequence + " triggered")
+            }
         }
-    }
        
         
         Menu {
@@ -421,7 +421,7 @@ QmlWidgets.WBApplicationWindow {
         }
     }
 
-        QmlWidgets.WBInputWindow {
+    QmlWidgets.WBInputWindow {
         id: renameSimulationWindow
         objectName: "renameSimulationWindow"
 
@@ -430,6 +430,8 @@ QmlWidgets.WBApplicationWindow {
 
         resizable: false
         movable: false
+        enabled: false
+        visible: false
 
         onAccepted: {
             resultsView.appendText("[FILE][Rename] Simulation renamed to '" + text +"'")
@@ -485,7 +487,9 @@ QmlWidgets.WBApplicationWindow {
         }
         QmlWidgets.WBButton01 {
             objectName: "button01"
+            id: button01
             text: "'menuBar' infos"
+            visible: false
 			MouseArea {
 				anchors.fill: parent
 				acceptedButtons:  Qt.AllButtons
@@ -502,8 +506,8 @@ QmlWidgets.WBApplicationWindow {
 			}
         }
         QmlWidgets.WBButton02 {
-            objectName: "button_02"
-            id: button02
+            objectName: "button02"
+            id: button_02
             text: "Button Style 02"
             MouseArea {
 				anchors.fill: parent
@@ -511,7 +515,8 @@ QmlWidgets.WBApplicationWindow {
 				
 				onClicked:
 				{
-                    resultsView.appendText("Button 02 has an ID AND an objectName (button_02)")
+                    button01.visible= !button01.visible
+                    //resultsView.appendText("Button 02 has an ID AND an objectName (button_02)")
 					if(mouse.button & Qt.RightButton)
 						resultsView.appendText("Button 2 right clicked")
 					else
@@ -581,11 +586,27 @@ QmlWidgets.WBApplicationWindow {
             }
         }
         Button{
-            objectName: "button"
-            text: "Simple Button"
-            onClicked: resultsView.appendText("simple button clicked")
-
+            objectName: "button_anchored"
+            text: "Anchored Button"
+            MouseArea{
+                objectName: "mouseArea_anchored"
+                anchors.fill: parent
+                onClicked: resultsView.appendText("anchored button clicked")
+            }
         }
+
+        Button{
+            objectName: "button_simple"
+            text: "Simple Button"
+            MouseArea{
+                //anchors.fill: parent
+                objectName: "mouseArea_simple"
+                onClicked: {
+                    resultsView.appendText("simple button clicked")
+                }
+            }
+        }
+        
     }
 
     ResultsView {

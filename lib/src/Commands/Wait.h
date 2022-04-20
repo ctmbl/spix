@@ -8,7 +8,7 @@
 
 #include "Command.h"
 
-#include <Spix/Data/ItemPosition.h>
+#include <Spix/Data/ItemPath.h>
 #include <Scene/Events.h>
 
 #include <functional>
@@ -21,7 +21,7 @@ class Wait : public Command {
 public:
     Wait(std::chrono::milliseconds waitTime);
     //own added
-    Wait(ItemPosition path, int timeout);
+    Wait(ItemPath path, int timeout);
 
     void execute(CommandEnvironment&) override;
     bool canExecuteNow(CommandEnvironment& env) override; //env param own added
@@ -36,7 +36,7 @@ private:
     std::chrono::milliseconds m_waitTime;
 
     //own added
-    ItemPosition m_position;
+    ItemPath m_path;
     int m_timeout;
 };
 
