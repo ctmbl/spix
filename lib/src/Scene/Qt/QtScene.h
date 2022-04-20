@@ -27,6 +27,7 @@ public:
 
     // Events
     Events& events() override;
+    void processEvent() override;
 
     // Tasks
     bool takeScreenshot(Item& targetItem, const std::string& filePath) override;

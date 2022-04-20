@@ -37,6 +37,7 @@ public:
 
     // Events
     virtual Events& events() = 0;
+    virtual void processEvent() = 0;
 
     // Tasks
     virtual bool takeScreenshot(Item& targetItem, const std::string& filePath) = 0;

@@ -64,6 +64,8 @@ set(SOURCES
     src/Commands/Wait.h
     src/Commands/SearchItem.cpp
     src/Commands/SearchItem.h
+    src/Commands/ClickAndExpect.cpp
+    src/Commands/ClickAndExpect.h
 
     src/CommandExecuter/CommandEnvironment.cpp
     src/CommandExecuter/CommandEnvironment.h

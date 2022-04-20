@@ -67,6 +67,8 @@ public:
 
     void quit();
 
+    int clickAndExpect(ItemPath pathToButton, ItemPath pathToStudiedObject, std::string property, std::string value, int timeout);
+
 protected:
     virtual void executeTest() = 0;
 

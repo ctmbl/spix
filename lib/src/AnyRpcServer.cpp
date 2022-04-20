@@ -102,6 +102,14 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
     utils::AddFunctionToAnyRpc<std::vector<std::string>(std::string)>(methodManager, "searchItem",
         "Given an incomplete path to item, return a list of complete path possibles | searchItem(string path)",
         [this](std::string path) {  return searchItem(std::move(path)); });
+        
+    utils::AddFunctionToAnyRpc<int(std::string, std::string, std::string, std::string, int)>(methodManager, "clickAndExpect", 
+        "Clicks on the object given by path, then wait for another (or the same) object property to get to a certain value, timeout in ms | \
+        clickAndExpect(string pathToButton, string pathToStudiedObject, string property, string value, int timeout)",
+        [this](std::string pathToButton, std::string pathToStudiedObject, std::string property, std::string value, int timeout) {  
+        return clickAndExpect(std::move(pathToButton), std::move(pathToStudiedObject), std::move(property), std::move(value), timeout);
+        });
+        
 
     m_pimpl->server->BindAndListen(anyrpcPort);
 }

@@ -12,6 +12,7 @@
 #include <Spix/Data/ItemPath.h>
 
 #include <QGuiApplication>
+#include <QCoreApplication>
 #include <QObject>
 #include <QQuickItem>
 #include <QQuickWindow>
@@ -135,6 +136,10 @@ std::unique_ptr<Object> QtScene::objectAtPath(const ItemPath& path)
 Events& QtScene::events()
 {
     return m_events;
+}
+
+void QtScene::processEvent(){
+    QCoreApplication::processEvents();
 }
 
 bool QtScene::takeScreenshot(Item& targetItem, const std::string& filePath)
