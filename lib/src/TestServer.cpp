@@ -26,6 +26,7 @@
 
 //own added
 #include <Commands/ListChildren.h>
+#include <Commands/ClickAndExpect.h>
 
 #include <Spix/Events/Identifiers.h>
 
@@ -171,6 +172,14 @@ void TestServer::waitForSignal(ItemPath path, int timeout){
     m_cmdExec->enqueueCommand<cmd::Wait>(path, timeout);
 }
 
+int TestServer::clickAndExpect(ItemPath pathToButton, ItemPath pathToStudiedObject, std::string property, std::string value, int timeout){
+    std::promise<int> promise;
+    auto result = promise.get_future();
+    auto cmd = std::make_unique<cmd::ClickAndExpect>(pathToButton, spix::MouseButtons::Left, pathToStudiedObject, std::move(property), std::move(value), timeout, std::move(promise));
+    m_cmdExec->enqueueCommand(std::move(cmd));
+
+    return result.get();
+}
 
 
 

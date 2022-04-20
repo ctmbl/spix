@@ -67,6 +67,8 @@ set(SOURCES
     #own added
     src/Commands/ListChildren.cpp
     src/Commands/ListChildren.h
+    src/Commands/ClickAndExpect.cpp
+    src/Commands/ClickAndExpect.h
 
     src/CommandExecuter/CommandEnvironment.cpp
     src/CommandExecuter/CommandEnvironment.h

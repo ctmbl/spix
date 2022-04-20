@@ -8,8 +8,6 @@
 #include <Utils/AnyRpcUtils.h>
 #include <anyrpc/anyrpc.h>
 #include <atomic>
-#include <Commands/Wait.h>
-#include <QCoreApplication>
 
 namespace spix {
 
@@ -119,33 +117,12 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
         [this](std::string path, int timeout = 5000) { waitForSignal(std::move(path), timeout); });
 
     utils::AddFunctionToAnyRpc<int(std::string, std::string, std::string, std::string, int)>(methodManager, "clickAndExpect", 
-        "Clicks on the object given by path, then wait for another (or the same) object property to get to a certain value | to be done",
+        "Clicks on the object given by path, then wait for another (or the same) object property to get to a certain value | \
+        clickAndExpect(string pathToButton, string pathToStudiedObject, string property, string value, int timeout)",
         [this](std::string pathToButton, std::string pathToStudiedObject, std::string property, std::string value, int timeout) {  
-        // 0: everytrhing went well, 1: timeout on property, 2: timeout on existsAndVisible, 3: button isn't visible
-        if(!existsAndVisible(pathToButton))
-            return 3;
-        mouseClick(std::move(pathToButton));
-
-        QCoreApplication::processEvents();
-        auto clock = cmd::Wait(std::chrono::milliseconds(timeout));
-        
-        if(!existsAndVisible(std::move(pathToStudiedObject))){
-            while(!(existsAndVisible(std::move(pathToStudiedObject)))){
-                    //DO IT BETTER
-                if(clock.timerWaitFor()){
-                    return 2;
-                }
-
-            }
-        }
-        while(getStringProperty(std::move(pathToStudiedObject), std::move(property)) != value){
-            if(clock.timerWaitFor()){
-                return 1;
-            }
-        }
-            
-        return 0;
+        return clickAndExpect(std::move(pathToButton), std::move(pathToStudiedObject), std::move(property), std::move(value), timeout);
         });
+        
 
     m_pimpl->server->BindAndListen(anyrpcPort);
 }

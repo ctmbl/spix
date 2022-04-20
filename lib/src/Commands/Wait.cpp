@@ -10,7 +10,7 @@
 #include <Scene/Qt/QtItem.h>
 #include <Scene/Qt/QtItemTools.h>
 #include <QSignalSpy>
-#include <QMouseEvent>
+
 
 #include <iostream>
 
