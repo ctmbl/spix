@@ -7,3 +7,4 @@ build_qtcreator
 *.txt.user
 .vscode
 rhel7-gcc8-release-shared
+spixNessieEnvCompile.sh
