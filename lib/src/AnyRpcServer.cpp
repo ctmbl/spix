@@ -112,9 +112,9 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
         "List children (and its descendants) of an item | listAll(string path)",
         [this](std::string path) { listChildren(std::move(path), true); });
     
-    utils::AddFunctionToAnyRpc<void(std::string, int)>(methodManager, "waitForSignal", 
-        "Waits for a specified signal or a timeout before continuing execution | waitForSignal(string path, int timeout_in_ms)",
-        [this](std::string path, int timeout = 5000) { waitForSignal(std::move(path), timeout); });
+    utils::AddFunctionToAnyRpc<void(std::string, std::string, int)>(methodManager, "waitForSignal", 
+        "Waits for a specified signal or a timeout before continuing execution | waitForSignal(string path, string signalSignature, int timeout_in_ms)",
+        [this](std::string path, std::string signal, int timeout) { waitForSignal(std::move(path), std::move(signal), timeout); });
 
     utils::AddFunctionToAnyRpc<int(std::string, std::string, std::string, std::string, int)>(methodManager, "clickAndExpect", 
         "Clicks on the object given by path, then wait for another (or the same) object property to get to a certain value | \

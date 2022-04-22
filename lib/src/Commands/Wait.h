@@ -21,7 +21,7 @@ class Wait : public Command {
 public:
     Wait(std::chrono::milliseconds waitTime);
     //own added
-    Wait(ItemPath path, int timeout);
+    Wait(ItemPath path, std::string str_signal, int timeout);
 
     void execute(CommandEnvironment&) override;
     bool canExecuteNow(CommandEnvironment& env) override; //env param own added
@@ -38,6 +38,7 @@ private:
     //own added
     ItemPath m_path;
     int m_timeout;
+    std::string m_str_signal;
 };
 
 } // namespace cmd

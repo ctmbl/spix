@@ -66,7 +66,7 @@ public:
 
     //own added
     void listChildren(ItemPath path, bool recursively);
-    void waitForSignal(ItemPath path, int timeout);
+    void waitForSignal(ItemPath path, std::string str_signal, int timeout);
     int clickAndExpect(ItemPath pathToButton, ItemPath pathToStudiedObject, std::string property, std::string value, int timeout);
 
 protected:

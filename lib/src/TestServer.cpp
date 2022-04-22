@@ -168,8 +168,8 @@ void TestServer::listChildren(ItemPath path, bool recursively){
     m_cmdExec->enqueueCommand<cmd::ListChildren>(path, recursively);
 }
 
-void TestServer::waitForSignal(ItemPath path, int timeout){
-    m_cmdExec->enqueueCommand<cmd::Wait>(path, timeout);
+void TestServer::waitForSignal(ItemPath path, std::string str_signal, int timeout){
+    m_cmdExec->enqueueCommand<cmd::Wait>(path, str_signal, timeout);
 }
 
 int TestServer::clickAndExpect(ItemPath pathToButton, ItemPath pathToStudiedObject, std::string property, std::string value, int timeout){

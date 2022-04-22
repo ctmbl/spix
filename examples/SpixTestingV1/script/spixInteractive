@@ -37,6 +37,8 @@ def spix(cmd):
         print("\t- c(<empty>|'relative/path')     : click on specified (or current if not) item")
         print("\t- get(prop, path='', no_check=False)         : get property 'prop' of item at 'path'; path is optional (pwd() by default); no_check optional")
         print("\t- set(prop, value, path='', no_check=False)  : set property 'prop' of item at 'path' at value 'value'; path is optional (pwd() by default); no_check optional")
+        print("\t- screen(pathImg, path='')       : take a screenshot of an item and save it at pathImg")
+        print("\t- err()                          : print errors")
         return
     try:
         print(s.system.methodHelp(cmd))
@@ -116,6 +118,13 @@ def screen(img_path, path=""):
         print("[-] can't take screenshot, add one of these extension:",img_format)
         return
     methods_wrapper(path,s.takeScreenshot,img_path)
+
+def err():
+    for e in s.getErrors():
+        if e[-1] == '\n':
+            print(e[:-1])
+        else:
+            print(e)
 
 s = xmlrpc.client.ServerProxy('http://localhost:9000')
 sHelp()

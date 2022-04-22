@@ -24,10 +24,11 @@ m_timeout(-1)
 {
 }
 
-Wait::Wait(ItemPath path, int timeout)
+Wait::Wait(ItemPath path, std::string str_signal, int timeout)
 : m_waitTime(std::chrono::milliseconds(0)),
 m_path(path),
-m_timeout(timeout)
+m_timeout(timeout),
+m_str_signal(str_signal)
 {
 }
 
@@ -55,25 +56,40 @@ bool Wait::timerWaitFor(){
 }
 
 bool Wait::signalWaitFor(CommandEnvironment& env){
-    auto item = static_cast<QtItem*>(env.scene().itemAtPath(m_path).get()); //maybe should i use a dynamic_cast here, items return by itemAtPath currently are QtItem but maybe won't be for ever
+    auto quickitem = env.scene().itemAtPath(m_path);    //forced to instance the std::unique_ptr in the function scope ! 
+    auto item = dynamic_cast<QtItem*>(quickitem.get()); //get the raw pointer from the std::unique_ptr
 
     if (!item) {
         env.state().reportError("WaitForSignal: [NOTFOUND] Item not found (or cast didn't work ?): " + m_path.string());
-        std::cout << "[SIGNAL] Item not found (or cast didn't work ?): " << m_path.string() << "\n";
+        std::cout << "[SIGNAL][ERROR] Item not found (or cast didn't work ?): " << m_path.string() << "\n";
         return true;
     }
 
-    auto mo = ((QObject*)item->qquickitem())->metaObject();
-    auto signal = mo->method(mo->indexOfSignal("clicked()"));
+    auto Qobj = item->qquickitem();
 
+    if(Qobj == nullptr){
+        env.state().reportError("WaitForSignal: [NOQUICKITEM] Unable to get QQuickItem from: " + m_path.string());
+        std::cout << "[SIGNAL][ERROR] Unable to get QQuickItem from: " << m_path.string() << "\n";
+        return true;
+    }
 
-    QSignalSpy spy((QObject*)item->qquickitem(), SIGNAL(clicked()));
+    auto mo = Qobj->metaObject();
+    auto signalIndex = mo->indexOfSignal(m_str_signal.c_str());
+    if(signalIndex < 0){
+        env.state().reportError("WaitForSignal: [NOTASIGNAL] '" + m_str_signal + "' isn't a signal, at least isn't a signal of: " + m_path.string());
+        std::cout << "[SIGNAL][NOTASIGNAL] '" + m_str_signal + "' isn't a signal, at least isn't a signal of: " << m_path.string() << "\n";
+        return true;
+    }
+    auto signal = mo->method(signalIndex);
+
+    QSignalSpy spy(Qobj, signal);
+
     if(spy.wait(m_timeout)){
         std::cout << "[SIGNAL] button clicked signal received within the timeout\n";
         return true;
     }
     std::cout << "[SIGNAL][TIMEOUT] signal has never been received\n";
-    env.state().reportError("WaitForSignal: [TIMEOUT] signal '<SIGNAL>' has never been received\n");
+    env.state().reportError("WaitForSignal: [TIMEOUT] signal '" + signal.name().toStdString() + "' has never been received");
     return true;
 }
 
