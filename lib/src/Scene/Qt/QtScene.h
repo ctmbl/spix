@@ -29,6 +29,8 @@ public:
     // Tasks
     bool takeScreenshot(Item& targetItem, const std::string& filePath) override;
 
+    std::vector<std::string> searchEveryCompletePath(const ItemPath& );
+
 private:
     QtEvents m_events;
 };

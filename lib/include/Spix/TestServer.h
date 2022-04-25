@@ -62,6 +62,9 @@ public:
     std::vector<std::string> getErrors();
 
     bool takeScreenshot(ItemPath targetItem, std::string filePath);
+
+    std::vector<std::string> searchItem(ItemPath path);
+
     void quit();
 
 protected:
