@@ -12,6 +12,9 @@
 #include <map>
 #include <string>
 
+//own added
+//nothing
+
 class QQuickWindow;
 
 namespace spix {
@@ -32,6 +35,7 @@ public:
     //own added 
     std::vector<std::string> listChildrenAtPath(const ItemPath& );
     void listEveryChildrenAtPath(const ItemPath& );
+    std::vector<std::string> searchEveryCompletePath(const ItemPath& );
 
 private:
     QtEvents m_events;

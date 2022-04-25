@@ -7,18 +7,22 @@
 #include <Scene/Events.h>
 #include <Spix/Data/ItemPath.h>
 
+#include <vector>
+#include <future>
+
 namespace spix {
 namespace cmd {
 
-class SPIX_EXPORT ListChildren : public Command {
+class SPIX_EXPORT SearchItem : public Command {
 public:
-    ListChildren(ItemPath path, bool recursively);
+    SearchItem(ItemPath path, bool first, std::promise<std::vector<std::string>> promise);
 
     void execute(CommandEnvironment& env) override;
 
 private:
     ItemPath m_path;
-    bool m_recursively;
+    bool m_first;
+    std::promise<std::vector<std::string>> m_promise;
 };
 
 } // namespace cmd

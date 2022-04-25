@@ -4,9 +4,6 @@
  * See LICENSE.txt file in the project root for full license information.
  ****/
 
-#include <iostream>
-#include <vector>
-
 #include "QtScene.h"
 
 #include <Scene/Qt/QtItem.h>
@@ -17,6 +14,11 @@
 #include <QObject>
 #include <QQuickItem>
 #include <QQuickWindow>
+
+//own added:
+#include <iostream>
+#include <vector>
+#include <QString>
 
 namespace {
 
@@ -166,9 +168,17 @@ std::vector<std::string> QtScene::listChildrenAtPath(const ItemPath& path){
     return children;
 }
 
-
 void QtScene::listEveryChildrenAtPath(const ItemPath& path ){
     spix::qt::ListEveryChildren(getQQuickItemAtPath(path));
+}
+
+std::vector<std::string> QtScene::searchEveryCompletePath(const ItemPath& path){
+    auto windowName = path.rootComponent();
+    QQuickWindow* itemWindow = getQQuickWindowWithName(windowName);
+    std::vector<std::string> pathsList = {};
+    spix::qt::SearchEveryCompletePath(itemWindow, QString(path.subPath(1).string().c_str()), pathsList, QString(path.rootComponent().c_str()));
+    return pathsList;
+
 }
 
 } // namespace spix

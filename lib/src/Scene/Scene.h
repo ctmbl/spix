@@ -14,7 +14,8 @@
 #include <memory>
 #include <string>
 
-#include <QObject>
+//own added
+#include <vector>
 
 
 namespace spix {
@@ -44,6 +45,8 @@ public:
     //own added 
     virtual std::vector<std::string> listChildrenAtPath(const ItemPath& ) = 0;
     virtual void listEveryChildrenAtPath(const ItemPath& ) = 0;
+    virtual std::vector<std::string> searchEveryCompletePath(const ItemPath&) = 0;
+
 };
 
 } // namespace spix

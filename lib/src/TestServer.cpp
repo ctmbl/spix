@@ -24,9 +24,11 @@
 #include <Commands/SetProperty.h>
 #include <Commands/Wait.h>
 
+
 //own added
 #include <Commands/ListChildren.h>
 #include <Commands/ClickAndExpect.h>
+#include <Commands/SearchItem.h>
 
 #include <Spix/Events/Identifiers.h>
 
@@ -178,6 +180,14 @@ int TestServer::clickAndExpect(ItemPath pathToButton, ItemPath pathToStudiedObje
     auto cmd = std::make_unique<cmd::ClickAndExpect>(pathToButton, spix::MouseButtons::Left, pathToStudiedObject, std::move(property), std::move(value), timeout, std::move(promise));
     m_cmdExec->enqueueCommand(std::move(cmd));
 
+    return result.get();
+}
+
+std::vector<std::string> TestServer::searchItem(ItemPath path){
+    std::promise<std::vector<std::string>> promise;
+    auto result = promise.get_future();
+    auto cmd = std::make_unique<cmd::SearchItem>(path, false, std::move(promise));
+    m_cmdExec->enqueueCommand(std::move(cmd));
     return result.get();
 }
 
