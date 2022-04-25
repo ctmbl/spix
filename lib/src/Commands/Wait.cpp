@@ -6,12 +6,15 @@
 
 #include "Wait.h"
 
+
+
+//own added
 #include <Scene/Scene.h>
 #include <Scene/Qt/QtItem.h>
 #include <Scene/Qt/QtItemTools.h>
-#include <QSignalSpy>
 
 
+#include <QSignalSpy> //to be modified, Qt include shouldn't appear here
 #include <iostream>
 
 namespace spix {
@@ -82,7 +85,7 @@ bool Wait::signalWaitFor(CommandEnvironment& env){
     }
     auto signal = mo->method(signalIndex);
 
-    QSignalSpy spy(Qobj, signal);
+    QSignalSpy spy(Qobj, signal); //to be modified, Qt include shouldn't appear here
 
     if(spy.wait(m_timeout)){
         std::cout << "[SIGNAL] button clicked signal received within the timeout\n";

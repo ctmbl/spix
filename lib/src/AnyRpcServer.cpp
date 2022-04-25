@@ -127,6 +127,10 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
         "Given an incomplete path to item, return a list of complete path possibles | searchItem(string path)",
         [this](std::string path) {  return searchItem(std::move(path)); });
 
+    utils::AddFunctionToAnyRpc<std::vector<std::string>(std::string)>(methodManager, "listSignals", 
+        "Given the path to an item, return the list of signals it can listen | listSignals(string path)",
+        [this](std::string path) {  return listSignals(std::move(path)); });
+
     m_pimpl->server->BindAndListen(anyrpcPort);
 }
 

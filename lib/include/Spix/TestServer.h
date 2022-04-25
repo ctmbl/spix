@@ -69,6 +69,7 @@ public:
     void waitForSignal(ItemPath path, std::string str_signal, int timeout);
     int clickAndExpect(ItemPath pathToButton, ItemPath pathToStudiedObject, std::string property, std::string value, int timeout);
     std::vector<std::string> searchItem(ItemPath path);
+    std::vector<std::string> listSignals(ItemPath path);
 
 protected:
     virtual void executeTest() = 0;

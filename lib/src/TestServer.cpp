@@ -29,6 +29,7 @@
 #include <Commands/ListChildren.h>
 #include <Commands/ClickAndExpect.h>
 #include <Commands/SearchItem.h>
+#include <Commands/ListSignalsAndSlots.h>
 
 #include <Spix/Events/Identifiers.h>
 
@@ -187,6 +188,14 @@ std::vector<std::string> TestServer::searchItem(ItemPath path){
     std::promise<std::vector<std::string>> promise;
     auto result = promise.get_future();
     auto cmd = std::make_unique<cmd::SearchItem>(path, false, std::move(promise));
+    m_cmdExec->enqueueCommand(std::move(cmd));
+    return result.get();
+}
+
+std::vector<std::string> TestServer::listSignals(ItemPath path){
+    std::promise<std::vector<std::string>> promise;
+    auto result = promise.get_future();
+    auto cmd = std::make_unique<cmd::ListSignalsAndSlots>(path, std::move(promise));
     m_cmdExec->enqueueCommand(std::move(cmd));
     return result.get();
 }
