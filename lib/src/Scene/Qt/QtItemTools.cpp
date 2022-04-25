@@ -69,7 +69,7 @@ QObject* FindChildItem(QObject* object, const QString& name, int depth)
         //std::cout << "[+] Cast in QQuickItem* OK\n";
 
         for (auto child : qquickitem->childItems()) {
-            std::cout << std::string(depth, '\t') << " - " << GetObjectName(child).toStdString() << "\n";
+            //std::cout << std::string(depth, '\t') << " - " << GetObjectName(child).toStdString() << "\n";
             if (GetObjectName(child) == name) {
                 return child;
             }
@@ -80,7 +80,7 @@ QObject* FindChildItem(QObject* object, const QString& name, int depth)
     } else {
         //std::cout << "[+] NO Cast in QQuickItem* \n";
         for (auto child : object->children()) {
-            std::cout << std::string(depth, '\t') << " - " << GetObjectName(child).toStdString() << " [+] NOT A QQuickItem  \n";
+            //std::cout << std::string(depth, '\t') << " - " << GetObjectName(child).toStdString() << " [+] NOT A QQuickItem  \n";
             if (GetObjectName(child) == name) {
                 return child;
             }

@@ -110,7 +110,7 @@ namespace spix {
 std::unique_ptr<Item> QtScene::itemAtPath(const ItemPath& path)
 {
     auto windowName = path.rootComponent();
-    printf("[START] itemAtPath | path=%s ; root component=%s\n",path.string().c_str(), windowName.c_str());
+    //printf("[START] itemAtPath | path=%s ; root component=%s\n",path.string().c_str(), windowName.c_str());
     QQuickItem* item = getQQuickItemAtPath(path);
 
     if (item) {
