@@ -128,13 +128,24 @@ def err():
         else:
             print(e)
 
-def search(path=""):
-    ret = methods_wrapper(path, s.searchItem)
+def search(path="", no_check=True, filters=[]):
+    ret = methods_wrapper(path, s.searchItem, no_check=no_check)
+    whitelist = [f for f in filters if f[0] != "!"]
+    blacklist = [f[1:] for f in filters if f[0] == "!"]
+    if not ret:
+        return
+    for p in ret:
+        conditions = [white in p for white in whitelist] + [black not in p for black in blacklist]
+        if all(conditions):
+            print(p)
+
+
+def signals(path="", no_check=True):
+    ret = methods_wrapper(path, s.listSignals, no_check=no_check)
     if not ret:
         return
     for p in ret:
         print(p)
-
 
 s = xmlrpc.client.ServerProxy('http://localhost:9000')
 sHelp()
