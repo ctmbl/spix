@@ -32,14 +32,15 @@ def spix(cmd):
         print("help:  List of useful functionalities")
         print("\t- pwd()                                      : return current item position")
         print("\t- cd('path/to/item|../../item')              : change current item position")
-        print("\t- ls(<empty>|'relative/path')                : list item children")
-        print("\t- lsa(<empty>|'relative/path')               : list item children and their children")
-        print("\t- c(<empty>|'relative/path')                 : click on specified (or current if not) item")
+        print("\t- ls(path='', no_check=False)                : list item children")
+        print("\t- lsa(path='', no_check=False)               : list item children and their children")
+        print("\t- c(path='', no_check=False)                 : click on specified (or current if not) item")
         print("\t- get(prop, path='', no_check=False)         : get property 'prop' of item at 'path'; path is optional (pwd() by default); no_check optional")
         print("\t- set(prop, value, path='', no_check=False)  : set property 'prop' of item at 'path' at value 'value'; path is optional (pwd() by default); no_check optional")
         print("\t- screen(pathImg, path='')                   : take a screenshot of an item and save it at pathImg")
         print("\t- err()                                      : print errors")
-        print("\t- search(<empty>|'relative/path')            : print errors")
+        print("\t- search(path='', no_check=True, filters=[]) : list every path ending by the provided item (CAUTION: handles only 1-item path), and filters them")
+        print("\t- signals(path='')                           : list every signals an item can emit")
         return
     try:
         print(s.system.methodHelp(cmd))
@@ -97,14 +98,14 @@ def methods_wrapper(path,func, prop=None, value=None, no_check=False):
             return func(path, prop)
         return func(path)
 
-def ls(path=""):
-    methods_wrapper(path, s.list)
+def ls(path="",no_check=False):
+    methods_wrapper(path, s.list, no_check=no_check)
 
-def lsa(path=""):
-    methods_wrapper(path, s.listAll)
+def lsa(path="",no_check=False ):
+    methods_wrapper(path, s.listAll, no_check=no_check)
 
 def c(path="",no_check=False):
-    methods_wrapper(path, s.mouseClick)
+    methods_wrapper(path, s.mouseClick, no_check=no_check)
 
 def get(prop, path="",no_check=False):
     ret = methods_wrapper(path, s.getStringProperty, prop, no_check=no_check)
@@ -147,7 +148,9 @@ def signals(path="", no_check=True):
     for p in ret:
         print(p)
 
-s = xmlrpc.client.ServerProxy('http://localhost:9000')
-sHelp()
+
+if __name__ == "__main__":
+    s = xmlrpc.client.ServerProxy('http://localhost:9000')
+    sHelp()
 
 
