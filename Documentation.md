@@ -15,13 +15,17 @@
 
 # TODO
 
-- the 2nd parameter of mouseClickWithButton is an int following the https://doc.qt.io/qt-5/qt.html#MouseButton-enum binary rule, meanings:
+ - the 2nd parameter of mouseClickWithButton is an int following the https://doc.qt.io/qt-5/qt.html#MouseButton-enum binary rule, meanings:
    - 0: None
    - 1: left
    - 2: right
    - 4: middle
    - SO 3 triggers left AND right
- - The 3rd parameter of enterKey is keyModifier and obey to the following binary rule:
+ - Typical Key for enterKey https://doc.qt.io/qt-5/qt.html#Key-enum:
+   - 0x01000000 : Escape
+   - 0x01000005 : Enter
+   - 0x01000012-15 : Arrow (Left-Up-Right-Down)
+ - The 3rd parameter of enterKey is keyModifier and obey to the following binary rule https://doc.qt.io/qt-5/qt.html#KeyboardModifier-enum:
    - 0: None
    - 1: Shift key
    - 2: Control key
@@ -34,4 +38,4 @@
  - resize using drag and drop respect resizing rules set in qml
  - we can overwrite these rules by changing width OR the resizable property with setStringProperty
  - setStringProperty can also completely modify the widget behavior, especially in the case of Template widget when a sigle widget is used in several different cases by setting a parameter true or false, take care these kind of actions aren't possible for the user so it doesn't present a vulnerability, setStringProperty must be used carefully because it can create bugs that don't really exist
- - 
+ - After a inputText method you must use enterKey(pathToYour, 0x01000005, 0) to simulate the 'Enter' pressed in order for Studio to take in account the changes
