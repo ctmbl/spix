@@ -1,5 +1,17 @@
 .DS_Store
 *.swp
 .idea
-build
 dep-libs
+
+# CMake file from qt creator
+*.txt.user
+
+# VSCode
+.vscode
+
+# Build directories
+build*
+rhel7-gcc8-release-shared
+
+# Script for compiling spix in nessie's environment
+spixNessieEnvCompile.sh
