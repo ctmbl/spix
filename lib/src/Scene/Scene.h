@@ -8,6 +8,7 @@
 
 #include <Scene/Events.h>
 #include <Scene/Item.h>
+#include <Scene/Object.h>
 #include <Spix/Data/Geometry.h>
 #include <Spix/Data/ItemPath.h>
 
@@ -32,6 +33,7 @@ public:
 
     // Request objects
     virtual std::unique_ptr<Item> itemAtPath(const ItemPath& path) = 0;
+    virtual std::unique_ptr<Object> objectAtPath(const ItemPath& path) = 0;
 
     // Events
     virtual Events& events() = 0;

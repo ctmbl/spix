@@ -23,6 +23,8 @@ public:
     // Request objects
     std::unique_ptr<Item> itemAtPath(const ItemPath& path) override;
 
+    std::unique_ptr<Object> objectAtPath(const ItemPath& path) override;
+
     // Events
     Events& events() override;
 

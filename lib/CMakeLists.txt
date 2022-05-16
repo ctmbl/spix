@@ -79,6 +79,7 @@ set(SOURCES
 
     src/Scene/Events.h
     src/Scene/Item.h
+    src/Scene/Object.h
     src/Scene/Mock/MockEvents.cpp
     src/Scene/Mock/MockEvents.h
     src/Scene/Mock/MockScene.cpp
@@ -89,6 +90,8 @@ set(SOURCES
     src/Scene/Qt/QtEvents.h
     src/Scene/Qt/QtItem.cpp
     src/Scene/Qt/QtItem.h
+    src/Scene/Qt/QtObject.cpp
+    src/Scene/Qt/QtObject.h
     src/Scene/Qt/QtItemTools.cpp
     src/Scene/Qt/QtItemTools.h
     src/Scene/Qt/QtScene.cpp

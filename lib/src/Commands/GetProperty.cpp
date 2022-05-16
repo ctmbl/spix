@@ -20,14 +20,23 @@ GetProperty::GetProperty(ItemPath path, std::string propertyName, std::promise<s
 
 void GetProperty::execute(CommandEnvironment& env)
 {
-    auto item = env.scene().itemAtPath(m_path);
+    auto obj = env.scene().objectAtPath(m_path);
 
-    if (item) {
-        auto value = item->stringProperty(m_propertyName);
-        m_promise.set_value(value);
+    std::string error;
+    std::string valueString;
+
+    // Checks whether the targeted object can be found
+    if(obj){
+        std::tie(valueString, error) = obj->stringProperty(m_propertyName.c_str());
     } else {
-        m_promise.set_value("");
-        env.state().reportError("GetProperty: Item not found: " + m_path.string());
+        valueString = std::string("");
+        error = std::string("Item not found: " + m_path.string());
+    }
+    
+    m_promise.set_value(valueString);
+    if (!error.empty()){
+        error = "GetProperty: " + error;
+        env.state().reportError(error);
     }
 }
 
