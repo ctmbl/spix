@@ -12,6 +12,9 @@
 #include <map>
 #include <string>
 
+// TODO clean includes 
+#include <QObject>
+
 class QQuickWindow;
 
 namespace spix {
@@ -22,6 +25,8 @@ class QtScene : public Scene {
 public:
     // Request objects
     std::unique_ptr<Item> itemAtPath(const ItemPath& path) override;
+
+    QObject* objectAtPath(const ItemPath& path) override;
 
     // Events
     Events& events() override;

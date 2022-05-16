@@ -8,6 +8,10 @@
 
 #include <Scene/Scene.h>
 
+// TODO clean includes 
+#include <QObject>
+#include <QVariant>
+
 namespace spix {
 namespace cmd {
 
@@ -20,11 +24,11 @@ GetProperty::GetProperty(ItemPath path, std::string propertyName, std::promise<s
 
 void GetProperty::execute(CommandEnvironment& env)
 {
-    auto item = env.scene().itemAtPath(m_path);
+    auto obj = env.scene().objectAtPath(m_path);
 
-    if (item) {
-        auto value = item->stringProperty(m_propertyName);
-        m_promise.set_value(value);
+    if (obj) {
+        auto value = obj->property(m_propertyName.c_str());
+        m_promise.set_value(value.toString().toStdString());
     } else {
         m_promise.set_value("");
         env.state().reportError("GetProperty: Item not found: " + m_path.string());

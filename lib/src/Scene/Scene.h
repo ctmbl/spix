@@ -14,6 +14,10 @@
 #include <memory>
 #include <string>
 
+// TODO clean includes
+#include <QObject>
+
+
 namespace spix {
 
 class PasteboardContent;
@@ -31,6 +35,7 @@ public:
 
     // Request objects
     virtual std::unique_ptr<Item> itemAtPath(const ItemPath& path) = 0;
+    virtual QObject* objectAtPath(const ItemPath& path) = 0;
 
     // Events
     virtual Events& events() = 0;
