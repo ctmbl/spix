@@ -11,6 +11,7 @@
 // TODO clean includes 
 #include <QObject>
 #include <QVariant>
+#include <QtQml>
 
 namespace spix {
 namespace cmd {
@@ -26,12 +27,30 @@ void GetProperty::execute(CommandEnvironment& env)
 {
     auto obj = env.scene().objectAtPath(m_path);
 
-    if (obj) {
-        auto value = obj->property(m_propertyName.c_str());
-        m_promise.set_value(value.toString().toStdString());
-    } else {
+    if (!obj){
         m_promise.set_value("");
         env.state().reportError("GetProperty: Item not found: " + m_path.string());
+        return;
+    }
+
+    QQmlContext* const context = qmlContext(obj);
+    QVariant value;
+
+    if (context) {
+        value = context->contextProperty(m_propertyName.c_str());
+        if (value.isValid()){
+            m_promise.set_value(value.toString().toStdString());
+            return;
+        }
+    }
+    value = obj->property(m_propertyName.c_str());
+
+    if (value.isValid()){
+        m_promise.set_value(value.toString().toStdString());
+        return;
+    } else {
+        m_promise.set_value("");
+        env.state().reportError("GetProperty: Property not found: '" + m_propertyName + "' in Object at path: " + m_path.string());
     }
 }
 

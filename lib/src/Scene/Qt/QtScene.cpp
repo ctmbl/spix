@@ -35,7 +35,7 @@ QQuickWindow* getQQuickWindowWithName(const std::string& name)
     return foundWindow;
 }
 
-QObject* getQQuickItemWithRoot(const spix::ItemPath& path, QObject* root)
+QObject* getQObjectWithRoot(const spix::ItemPath& path, QObject* root)
 {
     if (path.length() == 0) {
         return nullptr;
@@ -77,13 +77,7 @@ QObject* getQQuickItemWithRoot(const spix::ItemPath& path, QObject* root)
         return subItem;
     }
 
-    return getQQuickItemWithRoot(path.subPath(1), subItem);
-}
-
-template <typename T>
-T getQQuickItemWithRoot(const spix::ItemPath& path, QObject* root)
-{
-    return qobject_cast<T>(getQQuickItemWithRoot(path, root));
+    return getQObjectWithRoot(path.subPath(1), subItem);
 }
 
 QObject* getQQuickItemAtPath(const spix::ItemPath& path)
@@ -97,7 +91,7 @@ QObject* getQQuickItemAtPath(const spix::ItemPath& path)
     }
 
     if (path.length() > 1) {
-        item = getQQuickItemWithRoot(path.subPath(1), itemWindow);
+        item = getQObjectWithRoot(path.subPath(1), itemWindow);
     } else {
         item = itemWindow->contentItem();
     }
