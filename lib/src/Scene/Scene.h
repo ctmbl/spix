@@ -15,8 +15,7 @@
 #include <string>
 
 // TODO clean includes
-#include <QObject>
-
+#include <Scene/Object.h>
 
 namespace spix {
 
@@ -35,7 +34,7 @@ public:
 
     // Request objects
     virtual std::unique_ptr<Item> itemAtPath(const ItemPath& path) = 0;
-    virtual QObject* objectAtPath(const ItemPath& path) = 0;
+    virtual std::unique_ptr<Object> objectAtPath(const ItemPath& path) = 0;
 
     // Events
     virtual Events& events() = 0;

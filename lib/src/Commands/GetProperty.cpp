@@ -26,7 +26,9 @@ GetProperty::GetProperty(ItemPath path, std::string propertyName, std::promise<s
 void GetProperty::execute(CommandEnvironment& env)
 {
     auto obj = env.scene().objectAtPath(m_path);
+    m_promise.set_value(obj->stringProperty(m_propertyName.c_str()));
 
+/*
     // Checks whether the targeted object can be found
     if (!obj){
         m_promise.set_value("");
@@ -76,6 +78,8 @@ void GetProperty::execute(CommandEnvironment& env)
     // No property QVariant property (context and classic) is valid, meaning the property doesn't exists for this Object
     m_promise.set_value("");
     env.state().reportError("GetProperty: Property not found: '" + m_propertyName + "' in Object at path: " + m_path.string());
+    
+    */
 }
 
 } // namespace cmd

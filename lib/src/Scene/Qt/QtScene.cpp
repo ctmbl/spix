@@ -16,6 +16,9 @@
 #include <QQuickWindow>
 #include <QQmlContext>
 
+// TODO clean includes 
+#include <Scene/Qt/QtObject.h>
+
 namespace {
 
 QQuickWindow* getQQuickWindowWithName(const std::string& name)
@@ -120,10 +123,14 @@ std::unique_ptr<Item> QtScene::itemAtPath(const ItemPath& path)
     return std::unique_ptr<QtItem>();
 }
 
-QObject* QtScene::objectAtPath(const ItemPath& path)
+std::unique_ptr<Object> QtScene::objectAtPath(const ItemPath& path)
 {
     QObject* obj = getQQuickItemAtPath<QObject*>(path);
-    return obj;
+
+    if (obj) {
+        return std::make_unique<QtObject>(obj);
+    }
+    return std::unique_ptr<QtObject>();
 }
 
 Events& QtScene::events()
