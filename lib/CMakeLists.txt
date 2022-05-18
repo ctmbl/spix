@@ -93,6 +93,11 @@ set(SOURCES
     src/Scene/Qt/QtScene.h
     src/Scene/Scene.h
 
+    #own added
+    src/Scene/Object.h
+    src/Scene/Qt/QtObject.cpp
+    src/Scene/Qt/QtObject.h
+
     src/Utils/AnyRpcUtils.h
     src/Utils/DebugDump.cpp
     src/Utils/DebugDump.h
