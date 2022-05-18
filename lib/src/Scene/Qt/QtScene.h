@@ -12,9 +12,6 @@
 #include <map>
 #include <string>
 
-// TODO clean includes 
-
-
 class QQuickWindow;
 
 namespace spix {

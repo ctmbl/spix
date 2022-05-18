@@ -7,6 +7,7 @@
 #include "QtScene.h"
 
 #include <Scene/Qt/QtItem.h>
+#include <Scene/Qt/QtObject.h>
 #include <Scene/Qt/QtItemTools.h>
 #include <Spix/Data/ItemPath.h>
 
@@ -15,9 +16,6 @@
 #include <QQuickItem>
 #include <QQuickWindow>
 #include <QQmlContext>
-
-// TODO clean includes 
-#include <Scene/Qt/QtObject.h>
 
 namespace {
 
@@ -128,7 +126,7 @@ std::unique_ptr<Object> QtScene::objectAtPath(const ItemPath& path)
     QObject* obj = getQQuickItemAtPath<QObject*>(path);
 
     if (obj) {
-        return std::make_unique<QtObject>(obj);
+        return std::make_unique<QtObject>(obj, path);
     }
     return std::unique_ptr<QtObject>();
 }

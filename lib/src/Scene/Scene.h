@@ -8,14 +8,12 @@
 
 #include <Scene/Events.h>
 #include <Scene/Item.h>
+#include <Scene/Object.h>
 #include <Spix/Data/Geometry.h>
 #include <Spix/Data/ItemPath.h>
 
 #include <memory>
 #include <string>
-
-// TODO clean includes
-#include <Scene/Object.h>
 
 namespace spix {
 
