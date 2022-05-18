@@ -52,17 +52,15 @@ QObject* getQObjectWithRoot(const spix::ItemPath& path, QObject* root)
     if (itemName.compare(0, 1, ".") == 0) {
         auto propertyName = itemName.substr(1);
         QQmlContext* const context = qmlContext(root);
+        QVariant propertyValue;
 
         if (context) {
-            QVariant property = context->contextProperty(propertyName.c_str());
-            if (property.isValid()){
-                return property.value<QObject*>();
-            } else {
-                return nullptr;
-            }
+            propertyValue = context->contextProperty(propertyName.c_str());
+        } else {
+            propertyValue = root->property(propertyName.c_str());
         }
-        QVariant propertyValue = root->property(propertyName.c_str());
-        if (propertyValue.isValid()) {
+
+        if (propertyValue.isValid()){
             subItem = propertyValue.value<QObject*>();
         }
     } else {
