@@ -16,7 +16,7 @@ QtObject::QtObject(QObject* object, ItemPath path)
 {
 }
 
-QtObject::StringsTuple QtObject::stringProperty(const std::string& name) const
+QtObject::StringPair QtObject::stringProperty(const std::string& name) const
 {
     QQmlContext* const context = qmlContext(m_object);
     QVariant value;
@@ -34,7 +34,7 @@ QtObject::StringsTuple QtObject::stringProperty(const std::string& name) const
             if (!valueString.empty()){
                 return std::make_pair(valueString, "");
             }
-            return std::make_pair("", "GetProperty: Property '" + name + "' in Object at path: " + m_path.string() + " can't be converted to string.");
+            return std::make_pair("", "Property '" + name + "' in Object at path: " + m_path.string() + " can't be converted to string.");
         }
     }
 
@@ -48,11 +48,11 @@ QtObject::StringsTuple QtObject::stringProperty(const std::string& name) const
         if (!valueString.empty()){
             return std::make_pair(valueString, "");
         }
-        return std::make_pair("", "GetProperty: Property '" + name + "' in Object at path: " + m_path.string() + " can't be converted to string.");
+        return std::make_pair("", "Property '" + name + "' in Object at path: " + m_path.string() + " can't be converted to string.");
     }
 
     // No property QVariant property (context and classic) is valid, meaning the property doesn't exists for this Object
-    return std::make_pair("", "GetProperty: Property not found: '" + name + "' in Object at path: " + m_path.string());
+    return std::make_pair("", "Property not found: '" + name + "' in Object at path: " + m_path.string());
 }
 
 void QtObject::setStringProperty(const std::string& name, const std::string& value){

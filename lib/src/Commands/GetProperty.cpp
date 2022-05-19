@@ -30,11 +30,12 @@ void GetProperty::execute(CommandEnvironment& env)
         std::tie(valueString, error) = obj->stringProperty(m_propertyName.c_str());
     } else {
         valueString = std::string("");
-        error = std::string("GetProperty: Item not found: " + m_path.string());
+        error = std::string("Item not found: " + m_path.string());
     }
     
     m_promise.set_value(valueString);
     if (!error.empty()){
+        error = "GetProperty: " + error;
         env.state().reportError(error);
     }
 }

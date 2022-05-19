@@ -13,12 +13,12 @@ namespace spix {
  */
 class Object {
 public:
-    using StringsTuple = std::pair<std::string,std::string>;
+    using StringPair = std::pair<std::string,std::string>;
 
     virtual ~Object() = default;
 
     // Object properties
-    virtual StringsTuple stringProperty(const std::string& name) const = 0;
+    virtual StringPair stringProperty(const std::string& name) const = 0;
     virtual void setStringProperty(const std::string& name, const std::string& value) = 0;
 };
 
